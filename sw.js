@@ -1,6 +1,6 @@
 // Salvadanaio – funzionamento offline.
 // Pagina: prima la rete (così ricevi gli aggiornamenti), se manca internet usa la copia salvata.
-const CACHE = "salvadanaio-v3";
+const CACHE = "salvadanaio-v4";
 const FILES = ["./", "./index.html", "./manifest.webmanifest", "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (e) => {
@@ -17,8 +17,10 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET" || new URL(req.url).origin !== location.origin) return;
+  // la pagina la chiedo sempre fresca (GitHub Pages altrimenti tiene una copia vecchia per 10 minuti)
+  const isPage = req.mode === "navigate" || /\/(index\.html)?$/.test(new URL(req.url).pathname);
   e.respondWith(
-    fetch(req)
+    (isPage ? fetch(req.url, { cache: "no-store", credentials: "same-origin" }) : fetch(req))
       .then((res) => {
         if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
         return res;
