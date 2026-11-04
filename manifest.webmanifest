@@ -1,0 +1,17 @@
+{
+  "name": "Salvadanaio",
+  "short_name": "Salvadanaio",
+  "description": "Dove va lo stipendio, quanto metto da parte e i miei obiettivi di risparmio.",
+  "lang": "it",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f4f1",
+  "theme_color": "#1baf7a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

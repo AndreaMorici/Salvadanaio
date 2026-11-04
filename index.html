@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Salvadanaio">
+<meta name="application-name" content="Salvadanaio">
+<meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Salvadanaio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0ibGciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyZmQzOWEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwYTczNTAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMDI0IiByeD0iMjMwIiBmaWxsPSJ1cmwoI2xnKSIvPjxyZWN0IHg9IjIzMiIgeT0iNTYwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjIzMCIgcng9IjQ0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjQzNyIgeT0iNDMwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjM2MCIgcng9IjQ0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii43OCIvPjxyZWN0IHg9IjY0MiIgeT0iMjkwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjUwMCIgcng9IjQ0IiBmaWxsPSIjZmZmIi8+PGNpcmNsZSBjeD0iMzA3IiBjeT0iMzY4IiByPSIxMTgiIGZpbGw9IiNmZmQyNWUiIHN0cm9rZT0iI2YyYjAxZSIgc3Ryb2tlLXdpZHRoPSIxOCIvPjx0ZXh0IHg9IjMwNyIgeT0iMzY4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMTUwIiBmaWxsPSIjOGE1NjAwIj7igqw8L3RleHQ+PC9zdmc+">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f4f4f1; --surface: #fcfcfb; --surface-2: #f0efec;
+    --ink: #0b0b0b; --ink-2: #52514e; --muted: #6f6e69;
+    --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --accent: #2a78d6; --accent-ink: #ffffff;
+    --spend: #52514e; --save: #1baf7a; --other: #898781;
+    --c1: #2a78d6; --c2: #eb6834; --c3: #6250d6; --c4: #eda100; --c5: #e87ba4; --c6: #008300; --c7: #e34948;
+    --good: #0ca30c; --good-text: #006300; --warn: #fab219; --crit: #d03b3b; --crit-text: #b22f2f;
+    --shadow: 0 1px 2px rgba(11,11,11,.04), 0 4px 16px rgba(11,11,11,.04);
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --bg: #0d0d0d; --surface: #1a1a19; --surface-2: #242422;
+      --ink: #f0efec; --ink-2: #c3c2b7; --muted: #9a9890;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --accent: #3987e5; --spend: #9a9890; --save: #199e70;
+      --c1: #3987e5; --c2: #d95926; --c3: #9085e9; --c4: #c98500; --c5: #d55181; --c6: #008300; --c7: #e66767;
+      --good-text: #0ca30c; --crit-text: #e66767; --shadow: none;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0d0d0d; --surface: #1a1a19; --surface-2: #242422;
+    --ink: #f0efec; --ink-2: #c3c2b7; --muted: #9a9890;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --accent: #3987e5; --spend: #9a9890; --save: #199e70;
+    --c1: #3987e5; --c2: #d95926; --c3: #9085e9; --c4: #c98500; --c5: #d55181; --c6: #008300; --c7: #e66767;
+    --good-text: #0ca30c; --crit-text: #e66767; --shadow: none;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  button, input, select { font: inherit; color: inherit; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left)); }
+  html { -webkit-text-size-adjust: 100%; }
+  body { overscroll-behavior-y: none; }
+  [hidden] { display: none !important; }
+
+  /* Header */
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .brand h1 { font-size: 22px; margin: 0; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+  .brand h1 .logo { width: 34px; height: 34px; border-radius: 9px; flex: none; }
+  .sync-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); margin-left: 8px; vertical-align: 2px; cursor: default; white-space: nowrap; text-transform: none; }
+  .sync-pill.ok { color: var(--good-text); background: color-mix(in srgb, var(--good) 12%, var(--surface)); }
+  .sync-pill.warn { color: var(--crit-text); background: color-mix(in srgb, var(--crit) 12%, var(--surface)); cursor: pointer; }
+  .brand p { margin: 2px 0 0; color: var(--ink-2); font-size: 14px; }
+  .brand p #today-label { text-transform: capitalize; }
+  .top-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .icon-btn { border: 1px solid var(--border); background: var(--surface); border-radius: 10px; height: 38px; min-width: 38px; padding: 0 12px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: var(--ink-2); font-size: 14px; white-space: nowrap; }
+  .icon-btn:hover { background: var(--surface-2); color: var(--ink); }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .icon-btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; font-weight: 600; }
+  .icon-btn.primary:hover { background: var(--accent); color: var(--accent-ink); filter: brightness(1.07); }
+  .month-nav { display: inline-flex; align-items: center; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 3px; }
+  .month-nav button { border: 0; background: transparent; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; color: var(--ink-2); font-size: 18px; }
+  .month-nav button:hover:not(:disabled) { background: var(--surface-2); color: var(--ink); }
+  .month-nav button:disabled { opacity: .35; cursor: default; }
+  .month-nav span { min-width: 128px; text-align: center; font-weight: 600; font-size: 14px; text-transform: capitalize; }
+  .future-tag { font-size: 11px; font-weight: 700; color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); padding: 1px 6px; border-radius: 999px; margin-left: 4px; vertical-align: 2px; text-transform: none; }
+
+  /* KPI */
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-bottom: 18px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); }
+  .kpi .label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 7px; }
+  .kpi .value { font-size: 26px; font-weight: 650; letter-spacing: -0.02em; margin-top: 4px; white-space: nowrap; }
+  .kpi .sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .kpi.hero { background: linear-gradient(135deg, color-mix(in srgb, var(--save) 14%, var(--surface)), var(--surface)); }
+  .sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+  .sw.track { background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--axis); }
+
+  /* Layout */
+  .grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
+  .card + .card { margin-top: 18px; }
+  .card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .card-head h2 { font-size: 17px; margin: 0; display: flex; align-items: center; gap: 8px; }
+  .card-head h2 span { text-transform: capitalize; margin-left: -4px; }
+  .card-head h3 { font-size: 15px; margin: 0; }
+  .muted { color: var(--muted); }
+  .small { font-size: 13px; }
+  .empty { color: var(--muted); font-size: 14px; padding: 14px 0; text-align: center; }
+
+  /* Month card */
+  .month-card { border-color: color-mix(in srgb, var(--accent) 30%, var(--border)); }
+  .status { font-size: 12.5px; font-weight: 650; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); }
+  .status.ok { color: var(--good-text); background: color-mix(in srgb, var(--good) 12%, var(--surface)); }
+  .status.todo { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--surface)); }
+  form.mc-form { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr) auto; gap: 12px; align-items: end; }
+  .mc-field { display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: var(--ink-2); font-weight: 600; }
+  .money { position: relative; }
+  .money input { padding-right: 30px; font-size: 18px; font-weight: 650; height: 46px; }
+  .money i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-style: normal; color: var(--muted); font-weight: 600; }
+  form.mc-form .btn { height: 46px; }
+  .mc-sum { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-top: 14px; }
+  .meta { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+  .meta .l { font-size: 12.5px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+  .meta .v { font-size: 17px; font-weight: 650; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .meta .p { font-size: 12px; color: var(--muted); }
+  .meta.hl { background: color-mix(in srgb, var(--save) 12%, var(--surface)); }
+  .mc-hint { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+  form.adj-form { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 12px; padding: 12px; border-radius: 10px; background: var(--surface-2); font-size: 13.5px; }
+  form.adj-form input { width: 140px; }
+  .alert { margin-top: 12px; padding: 9px 12px; border-radius: 10px; background: color-mix(in srgb, var(--crit) 12%, var(--surface)); color: var(--crit-text); font-size: 13.5px; font-weight: 550; display: none; }
+
+  .link-btn { border: 0; background: none; color: var(--accent); cursor: pointer; padding: 0; font-size: 13px; font-weight: 600; }
+  .link-btn:hover { text-decoration: underline; }
+  .link-btn:disabled { color: var(--muted); cursor: default; text-decoration: none; opacity: .5; }
+
+  /* Donut */
+  .donut-wrap { display: grid; grid-template-columns: 220px minmax(0,1fr); gap: 24px; align-items: center; }
+  .donut { position: relative; width: 220px; height: 220px; }
+  .donut svg { width: 100%; height: 100%; display: block; }
+  .donut circle.sl { transition: opacity .2s, stroke-width .2s; cursor: default; }
+  .donut.hl circle.sl { opacity: .3; }
+  .donut.hl circle.sl.on { opacity: 1; stroke-width: 32; }
+  .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
+  .donut-center .l { font-size: 12.5px; color: var(--ink-2); }
+  .donut-center .v { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .donut-center .s { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  .lg { display: flex; flex-direction: column; gap: 2px; }
+  .lg-row { display: grid; grid-template-columns: 12px minmax(0,1fr) auto 44px; gap: 10px; align-items: center; padding: 6px 8px; border-radius: 8px; font-size: 14px; cursor: default; }
+  .lg-row:hover, .lg-row.on { background: var(--surface-2); }
+  .lg-row .sw { width: 12px; height: 12px; }
+  .lg-row .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lg-row .nm small { display: block; font-size: 12px; color: var(--muted); white-space: normal; }
+  .lg-row .am { font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  .lg-row .pc { color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; font-size: 13px; }
+  .lg-row.save .nm { font-weight: 650; }
+  .lg-sep { border-top: 1px solid var(--grid); margin: 4px 8px; }
+  .budget-row { display: flex; align-items: center; gap: 12px; margin-top: 18px; font-size: 13.5px; flex-wrap: wrap; }
+  .budget-row .bar { flex: 1; min-width: 140px; }
+  .budget-row .txt { color: var(--ink-2); white-space: nowrap; }
+  .budget-edit { display: inline-flex; gap: 6px; align-items: center; }
+  .budget-edit input { width: 100px; height: 32px; }
+
+  /* Trend */
+  .trend { display: grid; grid-template-columns: 52px minmax(0,1fr); gap: 6px; }
+  .t-y { position: relative; height: 180px; }
+  .t-y span { position: absolute; right: 0; transform: translateY(50%); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .t-plot { position: relative; height: 180px; border-bottom: 1px solid var(--axis); }
+  .t-grid { position: absolute; left: 0; right: 0; border-top: 1px solid var(--grid); }
+  .t-cols { position: absolute; inset: 0; display: flex; }
+  .t-col { flex: 1; position: relative; cursor: pointer; border-radius: 8px; }
+  .t-col:hover { background: color-mix(in srgb, var(--surface-2) 70%, transparent); }
+  .t-col.sel { background: var(--surface-2); }
+  .t-stack { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 46%; max-width: 46px; display: flex; flex-direction: column-reverse; }
+  .t-stack .sp { background: var(--spend); }
+  .t-stack .sv { background: var(--save); border-bottom: 2px solid var(--surface); }
+  .t-col.sel .t-stack .sv { border-bottom-color: var(--surface-2); }
+  .t-stack > div:last-child { border-radius: 4px 4px 0 0; }
+  .t-inc { position: absolute; left: 12%; right: 12%; border-top: 2px dashed var(--ink); opacity: .75; }
+  .t-x { display: flex; margin-left: 58px; margin-top: 6px; }
+  .t-x div { flex: 1; text-align: center; font-size: 12px; color: var(--muted); line-height: 1.25; }
+  .t-x div b { display: block; color: var(--ink-2); font-weight: 600; text-transform: capitalize; }
+  .t-x div.sel b { color: var(--ink); }
+  .t-legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--ink-2); margin-top: 12px; }
+  .t-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dash { width: 16px; border-top: 2px dashed var(--ink); opacity: .75; display: inline-block; }
+
+  /* Bars */
+  .bar { height: 10px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+  .bar > div { height: 100%; border-radius: 999px; transition: width .5s ease, background .3s; }
+
+  /* Forms */
+  .seg { display: inline-flex; background: var(--surface-2); border-radius: 10px; padding: 3px; }
+  .seg button { border: 0; background: transparent; padding: 0 8px; height: 34px; border-radius: 8px; cursor: pointer; color: var(--ink-2); font-size: 13px; font-weight: 600; flex: 1; white-space: nowrap; }
+  .seg button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  input[type=text], input[type=number], input[type=date], input[type=month], select { height: 40px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); padding: 0 10px; width: 100%; min-width: 0; }
+  input:focus, select:focus, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .btn { height: 40px; border: 0; border-radius: 10px; background: var(--accent); color: var(--accent-ink); padding: 0 16px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .btn:hover { filter: brightness(1.07); }
+  .btn.save { background: var(--save); color: #fff; }
+  .btn.ghost { background: var(--surface-2); color: var(--ink); }
+  .btn.danger { background: var(--crit); color: #fff; }
+  .btn.sm { height: 32px; padding: 0 12px; font-size: 13px; }
+  form.tx-form { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+  form.tx-form #f-desc, form.tx-form .btn, form.tx-form #f-amount { grid-column: span 2; }
+  form.sv-form { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+  form.sv-form .seg, form.sv-form .btn, form.sv-form .field-hint { grid-column: 1 / -1; }
+  form.goal-form { display: grid; grid-template-columns: 56px minmax(0,1fr); gap: 8px; margin-top: 12px; }
+  form.goal-form .two { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 8px; }
+  form.goal-form .acts { grid-column: 1 / -1; display: flex; gap: 8px; justify-content: flex-end; }
+  form.goal-form .field-hint { grid-column: 1 / -1; }
+  .field-hint { font-size: 12px; color: var(--muted); margin: -2px 0 0 2px; }
+  #g-icon { text-align: center; padding: 0 4px; }
+
+  /* Lists */
+  .filters { display: inline-flex; gap: 4px; background: var(--surface-2); border-radius: 10px; padding: 3px; }
+  .filters button { border: 0; background: transparent; padding: 5px 11px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .filters button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  ul.tx { list-style: none; margin: 0; padding: 0; max-height: 380px; overflow-y: auto; }
+  ul.tx li { display: grid; grid-template-columns: 40px minmax(0,1fr) auto auto; gap: 12px; align-items: center; padding: 10px 4px; border-top: 1px solid var(--grid); }
+  ul.tx li:first-child { border-top: 0; }
+  ul.tx.compact { max-height: 300px; }
+  .tx-ico { width: 38px; height: 38px; border-radius: 10px; background: var(--surface-2); display: grid; place-items: center; font-size: 18px; position: relative; }
+  .tx-ico i { position: absolute; right: -2px; bottom: -2px; width: 11px; height: 11px; border-radius: 4px; border: 2px solid var(--surface); }
+  .tx-date { text-align: center; line-height: 1.1; }
+  .tx-date b { display: block; font-size: 17px; }
+  .tx-date span { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .tx-desc { min-width: 0; }
+  .tx-desc .d { font-weight: 550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .chip { display: inline-block; font-size: 12px; color: var(--ink-2); background: var(--surface-2); padding: 1px 8px; border-radius: 999px; margin-top: 2px; }
+  .amt { font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .amt.in { color: var(--good-text); }
+  .del { border: 0; background: transparent; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; color: var(--muted); font-size: 18px; line-height: 1; }
+  .del:hover { background: var(--surface-2); color: var(--crit-text); }
+  .row-acts { display: flex; gap: 2px; }
+  .edit { border: 0; background: transparent; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; color: var(--muted); font-size: 15px; line-height: 1; }
+  .edit:hover { background: var(--surface-2); color: var(--accent); }
+  ul.tx .tx-desc { cursor: pointer; }
+  ul.tx .tx-desc:hover .d { color: var(--accent); }
+  .undo-bar { display: inline-flex; gap: 4px; }
+  .undo-bar .icon-btn:disabled { opacity: .4; cursor: default; background: var(--surface); color: var(--ink-2); }
+  .ed-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 10px; margin: 6px 0 18px; }
+  .ed-grid label { font-size: 12.5px; color: var(--ink-2); display: flex; flex-direction: column; gap: 4px; font-weight: 600; }
+  .ed-grid .full { grid-column: 1 / -1; }
+  .ed-grid .hint { grid-column: 1 / -1; font-size: 12px; color: var(--muted); font-weight: 400; margin-top: -4px; }
+  .btn.ghost.warn { color: var(--crit-text); }
+
+  /* Savings */
+  .sv-hero { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+  .sv-hero .lbl { font-size: 12.5px; color: var(--ink-2); }
+  .sv-hero .big { font-size: 34px; font-weight: 750; letter-spacing: -0.025em; line-height: 1.1; }
+  .sv-hero .sub { font-size: 13.5px; color: var(--ink-2); margin-top: 4px; }
+  .delta { font-weight: 650; color: var(--good-text); }
+  .delta.neg { color: var(--crit-text); }
+  .sv-rate { text-align: right; }
+  .sv-rate .r { font-size: 22px; font-weight: 700; }
+  .sv-rate .l { font-size: 12.5px; color: var(--muted); }
+
+  .goals { display: flex; flex-direction: column; gap: 10px; }
+  .goal { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; background: var(--surface); }
+  .goal.ready { background: color-mix(in srgb, var(--good) 8%, var(--surface)); border-color: color-mix(in srgb, var(--good) 35%, transparent); }
+  .goal-top { display: flex; align-items: center; gap: 10px; }
+  .prio { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: var(--surface); font-size: 12px; font-weight: 700; display: grid; place-items: center; flex: none; }
+  .goal-icon { font-size: 20px; width: 36px; height: 36px; border-radius: 10px; background: var(--surface-2); display: grid; place-items: center; flex: none; }
+  .goal-name { font-weight: 600; min-width: 0; flex: 1; }
+  .goal-name .n { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+  .goal-name .m { font-size: 12.5px; color: var(--muted); font-weight: 400; }
+  .goal-amt { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .goal-amt b { font-size: 15px; }
+  .goal-amt span { font-size: 12.5px; color: var(--muted); display: block; }
+  .goal .bar { margin: 10px 0 7px; height: 12px; }
+  .goal .bar > div { background: var(--save); }
+  .goal.ready .bar > div { background: var(--good); }
+  .goal-foot { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; color: var(--ink-2); flex-wrap: wrap; align-items: center; }
+  .goal-acts { display: flex; gap: 4px; align-items: center; margin-left: auto; }
+  .mini { border: 1px solid var(--border); background: var(--surface); height: 28px; min-width: 28px; border-radius: 8px; cursor: pointer; color: var(--ink-2); font-size: 12.5px; font-weight: 600; padding: 0 8px; }
+  .mini:hover:not(:disabled) { background: var(--surface-2); color: var(--ink); }
+  .mini:disabled { opacity: .35; cursor: default; }
+  .mini.go { background: var(--good); border-color: transparent; color: #fff; }
+  .mini.go:hover { background: var(--good); color: #fff; filter: brightness(1.08); }
+  .mini.rm:hover { color: var(--crit-text); }
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-weight: 650; color: var(--good-text); }
+  .badge.late { color: var(--crit-text); }
+  .goals-note { font-size: 12.5px; color: var(--muted); margin: -6px 0 12px; }
+  .add-goal-btn { width: 100%; margin-top: 10px; border: 1px dashed var(--axis); background: transparent; border-radius: 12px; height: 44px; cursor: pointer; color: var(--ink-2); font-weight: 600; }
+  .add-goal-btn:hover { background: var(--surface-2); color: var(--ink); }
+  ul.done { list-style: none; margin: 0; padding: 0; }
+  ul.done li { display: grid; grid-template-columns: 36px minmax(0,1fr) auto; gap: 10px; align-items: center; padding: 10px 2px; border-top: 1px solid var(--grid); }
+  ul.done li:first-child { border-top: 0; }
+  ul.done .nm { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  ul.done .m { font-size: 12.5px; color: var(--muted); }
+  ul.done .acts { display: flex; gap: 4px; }
+
+  footer.foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 22px; color: var(--muted); font-size: 13px; flex-wrap: wrap; }
+  footer.foot .acts { display: flex; gap: 8px; flex-wrap: wrap; }
+  footer.foot .backup { display: flex; gap: 8px; flex-wrap: wrap; }
+  footer.foot .sep { width: 1px; background: var(--border); margin: 4px 2px; }
+  .note { background: var(--surface-2); border-radius: 10px; padding: 10px 14px; font-size: 13px; color: var(--ink-2); margin-bottom: 16px; display: none; }
+
+  /* Tooltip / modal / toast */
+  .tip { position: fixed; pointer-events: none; z-index: 50; background: var(--ink); color: var(--bg); padding: 7px 10px; border-radius: 8px; font-size: 12.5px; line-height: 1.35; opacity: 0; transition: opacity .12s; max-width: 260px; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+  .tip b { font-weight: 650; }
+  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: none; align-items: center; justify-content: center; z-index: 60; padding: 20px; }
+  .modal-bg.open { display: flex; }
+  .modal { background: var(--surface); border-radius: 16px; padding: 22px; width: 100%; max-width: 440px; border: 1px solid var(--border); }
+  .modal.wide { max-width: 560px; }
+  .modal h3 { margin: 0 0 6px; font-size: 17px; }
+  .modal p { margin: 0 0 16px; color: var(--ink-2); font-size: 14px; }
+  .modal .row { display: flex; justify-content: flex-end; gap: 8px; }
+  .modal .fields { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 8px; margin: 10px 0 16px; }
+  .modal .fields label { font-size: 12.5px; color: var(--ink-2); display: flex; flex-direction: column; gap: 4px; font-weight: 600; }
+  .check-row { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; cursor: pointer; }
+  .check-row input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--good); }
+  .export-area { width: 100%; height: 200px; resize: vertical; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2); padding: 10px; font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--ink); margin-bottom: 14px; }
+  .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(20px); opacity: 0; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; transition: all .25s; z-index: 70; pointer-events: none; max-width: calc(100vw - 32px); text-align: center; display: flex; align-items: center; gap: 14px; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.show.has-act { pointer-events: auto; }
+  .toast button { border: 0; background: color-mix(in srgb, var(--bg) 18%, transparent); color: var(--bg); font-weight: 700; padding: 5px 10px; border-radius: 7px; cursor: pointer; font-size: 13px; white-space: nowrap; }
+  .toast button:hover { background: color-mix(in srgb, var(--bg) 30%, transparent); }
+
+  @media (max-width: 1000px) {
+    .grid { grid-template-columns: minmax(0,1fr); }
+    .kpis { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  }
+  @media (max-width: 620px) {
+    .wrap { padding: max(16px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(32px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
+    .kpi .value { font-size: 21px; }
+    form.mc-form { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+    form.mc-form .btn { grid-column: 1 / -1; }
+    .mc-sum { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .donut-wrap { grid-template-columns: minmax(0,1fr); justify-items: center; }
+    .donut-wrap .lg { width: 100%; }
+    .trend { grid-template-columns: 44px minmax(0,1fr); }
+    .t-x { margin-left: 50px; }
+    form.tx-form { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    form.tx-form .full, form.tx-form #f-desc { grid-column: 1 / -1; }
+    form.tx-form #f-amount { grid-column: span 1; }
+    form.tx-form .btn { grid-column: 1 / -1; }
+    .top-actions .txt { display: none; }
+    .top-actions { width: 100%; flex-wrap: nowrap; gap: 6px; }
+    .top-actions .month-nav { flex: 1; justify-content: space-between; }
+    .top-actions .month-nav span { min-width: 0; }
+    .top-actions .icon-btn { padding: 0 10px; }
+    .undo-bar { gap: 6px; }
+    .sv-hero .big { font-size: 30px; }
+    .modal .fields { grid-template-columns: minmax(0,1fr); }
+    .ed-grid { grid-template-columns: minmax(0,1fr); }
+    .undo-bar .txt { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1><img class="logo" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0ibGciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyZmQzOWEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwYTczNTAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMDI0IiByeD0iMjMwIiBmaWxsPSJ1cmwoI2xnKSIvPjxyZWN0IHg9IjIzMiIgeT0iNTYwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjIzMCIgcng9IjQ0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjQzNyIgeT0iNDMwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjM2MCIgcng9IjQ0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii43OCIvPjxyZWN0IHg9IjY0MiIgeT0iMjkwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjUwMCIgcng9IjQ0IiBmaWxsPSIjZmZmIi8+PGNpcmNsZSBjeD0iMzA3IiBjeT0iMzY4IiByPSIxMTgiIGZpbGw9IiNmZmQyNWUiIHN0cm9rZT0iI2YyYjAxZSIgc3Ryb2tlLXdpZHRoPSIxOCIvPjx0ZXh0IHg9IjMwNyIgeT0iMzY4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMTUwIiBmaWxsPSIjOGE1NjAwIj7igqw8L3RleHQ+PC9zdmc+">Salvadanaio</h1>
+      <p><span id="today-label"></span><span class="sync-pill" id="sync-pill" title="">💾 Solo su questo dispositivo</span></p>
+    </div>
+    <div class="top-actions">
+      <div class="month-nav">
+        <button id="prev-month" aria-label="Mese precedente">‹</button>
+        <span id="month-label"></span>
+        <button id="next-month" aria-label="Mese successivo">›</button>
+      </div>
+      <div class="undo-bar">
+        <button class="icon-btn" id="undo-btn" disabled title="Annulla l'ultima modifica (Ctrl+Z)">↶ <span class="txt">Annulla</span></button>
+        <button class="icon-btn" id="redo-btn" disabled title="Ripeti (Ctrl+Shift+Z)">↷ <span class="txt">Ripeti</span></button>
+      </div>
+      <button class="icon-btn primary" id="add-month-btn" title="Vai al primo mese ancora da compilare">+ <span class="txt">Aggiungi mese</span></button>
+      <button class="icon-btn" id="theme-btn" title="Cambia tema" aria-label="Cambia tema">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <span class="txt" id="theme-txt">Tema</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="note" id="storage-note">Il salvataggio locale non è disponibile in questo browser: i dati resteranno solo finché la pagina è aperta. Usa “Esporta dati” per non perderli.</div>
+
+  <section class="kpis" aria-label="Riepilogo del mese">
+    <div class="kpi"><div class="label">💼 Entrate del mese</div><div class="value" id="k-in">–</div><div class="sub" id="k-in-sub"></div></div>
+    <div class="kpi"><div class="label"><span class="sw" style="background:var(--spend)"></span>Spese del mese</div><div class="value" id="k-out">–</div><div class="sub" id="k-out-sub"></div></div>
+    <div class="kpi"><div class="label"><span class="sw" style="background:var(--save)"></span>Messo da parte</div><div class="value" id="k-saved">–</div><div class="sub" id="k-saved-sub"></div></div>
+    <div class="kpi hero"><div class="label">🏦 Risparmi a fine mese</div><div class="value" id="k-total">–</div><div class="sub" id="k-total-sub"></div></div>
+  </section>
+
+  <div class="grid">
+    <!-- SINISTRA -->
+    <div>
+      <section class="card month-card" aria-labelledby="mc-title">
+        <div class="card-head" style="margin-bottom:14px">
+          <h2 id="mc-title-h">🗓️ Dati di<span id="mc-title"></span></h2>
+          <span class="status" id="mc-status"></span>
+        </div>
+        <form class="mc-form" id="mc-form" autocomplete="off">
+          <label class="mc-field">💼 Stipendio
+            <div class="money"><input type="number" id="mc-salary" min="0" step="0.01" placeholder="0,00" inputmode="decimal"><i>€</i></div>
+          </label>
+          <label class="mc-field">🐷 Messo da parte nel mese
+            <div class="money"><input type="number" id="mc-saved" step="0.01" placeholder="0,00" inputmode="decimal"><i>€</i></div>
+          </label>
+          <button class="btn" type="submit">Salva mese</button>
+        </form>
+        <div class="mc-sum">
+          <div class="meta"><div class="l">Altre entrate</div><div class="v" id="mc-other">–</div><div class="p">dal registro</div></div>
+          <div class="meta"><div class="l"><span class="sw" style="background:var(--spend)"></span>Spese</div><div class="v" id="mc-out">–</div><div class="p"><button class="link-btn" id="go-reg">+ aggiungi spese</button></div></div>
+          <div class="meta"><div class="l"><span class="sw track"></span>Ancora disponibile</div><div class="v" id="mc-free">–</div><div class="p" id="mc-free-p"></div></div>
+          <div class="meta hl"><div class="l">🏦 Risparmi a fine mese</div><div class="v" id="mc-total">–</div><div class="p"><button class="link-btn" id="adj-btn">Correggi col saldo reale</button></div></div>
+        </div>
+        <form class="adj-form" id="adj-form" hidden autocomplete="off">
+          <span>Saldo reale del conto risparmi a fine <b id="adj-month"></b>:</span>
+          <input type="number" id="adj-input" step="0.01" min="0" aria-label="Saldo reale in euro">
+          <button class="btn sm save" type="submit">Allinea</button>
+          <button class="btn sm ghost" type="button" id="adj-cancel">Annulla</button>
+          <span class="field-hint" style="flex-basis:100%;margin:0">Aggiungo una rettifica pari alla differenza: cambia il totale, ma non il “messo da parte” del mese.</span>
+        </form>
+        <div class="alert" id="over-alert"></div>
+      </section>
+
+      <section class="card" aria-labelledby="alloc-title">
+        <div class="card-head">
+          <h2 id="alloc-title">💶 Dove va il tuo stipendio</h2>
+          <span class="small muted" id="alloc-month" style="text-transform:capitalize"></span>
+        </div>
+        <div class="donut-wrap">
+          <div class="donut" id="donut">
+            <svg viewBox="0 0 200 200" id="donut-svg" role="img"></svg>
+            <div class="donut-center"><div class="l">Entrate</div><div class="v" id="dc-v">–</div><div class="s" id="dc-s"></div></div>
+          </div>
+          <div class="lg" id="donut-legend"></div>
+        </div>
+        <div class="budget-row">
+          <span class="txt">Tetto spese:</span>
+          <span id="budget-view"><b id="budget-value"></b> <button class="link-btn" id="budget-edit-btn">Modifica</button></span>
+          <form class="budget-edit" id="budget-form" hidden>
+            <input type="number" id="budget-input" min="0" step="10" aria-label="Tetto spese mensile in euro">
+            <button class="link-btn" type="submit">OK</button>
+          </form>
+          <div class="bar" id="budget-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Spese rispetto al tetto mensile"><div></div></div>
+          <span class="txt" id="budget-pct"></span>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="trend-title">
+        <div class="card-head" style="margin-bottom:14px">
+          <h2 id="trend-title">📈 Andamento ultimi 6 mesi</h2>
+          <span class="small muted">clicca un mese per aprirlo</span>
+        </div>
+        <div class="trend"><div class="t-y" id="t-y"></div><div class="t-plot" id="t-plot"></div></div>
+        <div class="t-x" id="t-x"></div>
+        <div class="t-legend">
+          <span><i class="sw" style="background:var(--spend)"></i>Spese</span>
+          <span><i class="sw" style="background:var(--save)"></i>Messo da parte</span>
+          <span><i class="dash"></i>Entrate</span>
+          <span class="muted">· sotto ogni mese: tasso di risparmio</span>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="reg-title" id="reg-card">
+        <div class="card-head"><h2 id="reg-title">Registro entrate e uscite</h2></div>
+        <form class="tx-form" id="tx-form" autocomplete="off">
+          <div class="seg full" id="tx-seg" role="group" aria-label="Tipo di movimento">
+            <button type="button" data-type="out" class="on">Uscita</button>
+            <button type="button" data-type="in">Entrata</button>
+          </div>
+          <input type="text" id="f-desc" placeholder="Descrizione (es. Spesa)" required maxlength="60" aria-label="Descrizione">
+          <select id="f-cat" aria-label="Categoria"></select>
+          <input type="number" id="f-amount" placeholder="Importo €" min="0.01" step="0.01" required aria-label="Importo in euro">
+          <button class="btn" type="submit" id="f-submit">+ Aggiungi</button>
+        </form>
+        <div class="card-head" style="margin:20px 0 6px">
+          <h3 id="tx-list-title">Movimenti del mese</h3>
+          <div class="filters" id="tx-filters">
+            <button data-f="all" class="on">Tutti</button><button data-f="in">Entrate</button><button data-f="out">Uscite</button>
+          </div>
+        </div>
+        <ul class="tx" id="tx-list"></ul>
+      </section>
+    </div>
+
+    <!-- DESTRA -->
+    <div>
+      <section class="card" aria-labelledby="sv-title">
+        <div class="card-head" style="margin-bottom:10px"><h2 id="sv-title">🐷 Conto risparmi</h2></div>
+        <div class="sv-hero">
+          <div>
+            <div class="lbl">Saldo attuale</div>
+            <div class="big" id="sv-total">–</div>
+            <div class="sub" id="sv-month"></div>
+          </div>
+          <div class="sv-rate"><div class="r" id="sv-rate">–</div><div class="l">tasso di risparmio<br>del mese</div></div>
+        </div>
+        <form class="sv-form" id="sv-form" autocomplete="off">
+          <div class="seg" id="sv-seg" role="group" aria-label="Tipo di operazione">
+            <button type="button" data-k="extra" class="on">Versamento</button>
+            <button type="button" data-k="withdraw">Prelievo</button>
+            <button type="button" data-k="initial">Saldo iniziale</button>
+          </div>
+          <input type="number" id="s-amount" placeholder="Importo €" min="0.01" step="0.01" required aria-label="Importo in euro">
+          <input type="text" id="s-note" placeholder="Nota (es. Tredicesima)" maxlength="60" aria-label="Nota">
+          <div class="field-hint" id="s-hint">Per versamenti extra oltre a quello mensile (es. bonus, tredicesima). Il risparmio di ogni mese lo inserisci in “Dati del mese”.</div>
+          <button class="btn save" type="submit" id="s-submit">+ Aggiungi versamento</button>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="goals-title">
+        <div class="card-head" style="margin-bottom:12px">
+          <h2 id="goals-title">🎯 Obiettivi</h2>
+          <span class="small muted" id="goals-count"></span>
+        </div>
+        <div class="goals-note" id="goals-note"></div>
+        <div class="goals" id="goals"></div>
+        <button class="add-goal-btn" id="add-goal-btn">+ Nuovo obiettivo</button>
+        <form class="goal-form" id="goal-form" hidden autocomplete="off">
+          <input type="text" id="g-icon" value="🎯" maxlength="4" aria-label="Icona (emoji)">
+          <input type="text" id="g-name" placeholder="Nome (es. Fondo emergenza)" maxlength="40" required aria-label="Nome obiettivo">
+          <div class="two">
+            <input type="number" id="g-target" placeholder="Cifra da raggiungere €" min="1" step="1" required aria-label="Cifra obiettivo in euro">
+            <input type="month" id="g-deadline" aria-label="Scadenza (facoltativa)">
+          </div>
+          <div class="field-hint">Scadenza facoltativa. Il nuovo obiettivo va in fondo alla lista: spostalo con ↑ ↓ in base all'importanza.</div>
+          <div class="acts">
+            <button type="button" class="btn ghost" id="goal-cancel">Annulla</button>
+            <button type="submit" class="btn save">Crea obiettivo</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="done-title">
+        <div class="card-head" style="margin-bottom:6px">
+          <h3 id="done-title">🏆 Obiettivi completati</h3>
+          <span class="small muted" id="done-count"></span>
+        </div>
+        <ul class="done" id="done-list"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="svh-title">
+        <div class="card-head" style="margin-bottom:6px">
+          <h3 id="svh-title">Movimenti del conto risparmi</h3>
+          <span class="small muted" id="svh-count"></span>
+        </div>
+        <ul class="tx compact" id="sv-list"></ul>
+      </section>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <span><span id="storage-where">Dati salvati solo in questo browser</span> · <span id="last-backup">Ultimo backup: mai</span></span>
+    <div class="acts">
+      <div class="backup">
+        <button class="icon-btn primary" id="export-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          Esporta dati (backup)
+        </button>
+        <button class="icon-btn" id="import-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          Importa dati
+        </button>
+        <input type="file" id="import-file" accept=".json,application/json" hidden>
+      </div>
+      <span class="sep" aria-hidden="true"></span>
+      <button class="icon-btn" id="seed-btn" hidden>Ripristina dati di esempio</button>
+      <button class="icon-btn" id="clear-btn">Cancella tutto</button>
+    </div>
+  </footer>
+</div>
+
+<div class="tip" id="tip" role="tooltip"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="modal-bg" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <h3 id="modal-title"></h3>
+    <p id="modal-text"></p>
+    <div class="row"><button class="btn ghost" id="modal-cancel">Annulla</button><button class="btn danger" id="modal-ok">Conferma</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="done-modal" role="dialog" aria-modal="true" aria-labelledby="dm-title">
+  <form class="modal" id="dm-form" autocomplete="off">
+    <h3 id="dm-title">Obiettivo completato 🎉</h3>
+    <p id="dm-text"></p>
+    <label class="check-row"><input type="checkbox" id="dm-spent" checked><span>Ho usato i risparmi: <b>scala l'importo dal conto risparmi</b><br><span class="muted small">Così gli altri obiettivi si aggiornano sul saldo che ti resta davvero.</span></span></label>
+    <div class="fields" id="dm-fields">
+      <label>Importo speso<input type="number" id="dm-amount" min="0.01" step="0.01"></label>
+      <label>Mese<input type="month" id="dm-date"></label>
+    </div>
+    <div class="row"><button type="button" class="btn ghost" id="dm-cancel">Annulla</button><button type="submit" class="btn save">Segna come completato</button></div>
+  </form>
+</div>
+
+<div class="modal-bg" id="edit-modal" role="dialog" aria-modal="true" aria-labelledby="ed-title">
+  <form class="modal" id="ed-form" autocomplete="off">
+    <h3 id="ed-title">Modifica</h3>
+    <div class="ed-grid" id="ed-fields"></div>
+    <div class="row">
+      <button type="button" class="btn ghost warn" id="ed-delete">Elimina</button>
+      <span style="flex:1"></span>
+      <button type="button" class="btn ghost" id="ed-cancel">Annulla</button>
+      <button type="submit" class="btn">Salva modifiche</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal-bg" id="export-modal" role="dialog" aria-modal="true" aria-labelledby="export-title">
+  <div class="modal wide">
+    <h3 id="export-title">Copia il tuo backup</h3>
+    <p>Lo scaricamento diretto non è disponibile. Copia il testo qui sotto, incollalo in un file di testo e salvalo con estensione <b>.json</b> (es. <code>backup-dashboard.json</code>). Potrai poi caricarlo con “Importa dati”.</p>
+    <textarea class="export-area" id="export-text" readonly aria-label="Contenuto del backup in formato JSON"></textarea>
+    <div class="row"><button class="btn ghost" id="export-close">Chiudi</button><button class="btn" id="export-copy">Copia negli appunti</button></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- Utility ---------- */
+  const KEY = "dashboard-personale-v1";
+  const THEME_KEY = "dashboard-personale-theme";
+  const VERSION = 4;
+  const $ = (id) => document.getElementById(id);
+  const eur = new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR" });
+  const eur0 = new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  const pad = (n) => String(n).padStart(2, "0");
+  const ymd = (d) => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  const parseYmd = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const round2 = (n) => Math.round(n * 100) / 100;
+  const pctOf = (a, b) => (b > 0 ? Math.round((a / b) * 100) : 0);
+  const sum = (arr, f) => arr.reduce((a, x) => a + f(x), 0);
+  const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+  const MONTH_RE = /^\d{4}-\d{2}$/;
+  const lastDayOf = (y, m) => ymd(new Date(y, m + 1, 0));
+  const monthName = (y, m, opt) => new Date(y, m, 1).toLocaleDateString("it-IT", opt || { month: "long" });
+  const monthLong = (y, m) => monthName(y, m, { month: "long", year: "numeric" });
+
+  const CATS = {
+    out: ["Terea", "Cibo", "Spesa", "Trasporti", "Shopping", "Svago", "Altro"],
+    in: ["Stipendio", "Extra", "Rimborso", "Regalo", "Altro"]
+  };
+  // Tipi di movimento sul conto risparmi
+  const SV_KINDS = ["monthly", "extra", "withdraw", "initial", "adjust", "goal"];
+  const FLOW_KINDS = new Set(["monthly", "extra", "withdraw"]); // contano nel "messo da parte" del mese
+  const KIND_LABEL = { monthly: "Risparmio del mese", extra: "Versamento extra", withdraw: "Prelievo", initial: "Saldo iniziale", adjust: "Rettifica saldo", goal: "Obiettivo realizzato" };
+
+  /* ---------- Storage ---------- */
+  let storageOk = true;
+  function readStore(key) { try { return localStorage.getItem(key); } catch (e) { storageOk = false; return null; } }
+  function writeStore(key, val) { try { localStorage.setItem(key, val); } catch (e) { storageOk = false; showStorageNote(); } }
+  function showStorageNote() { $("storage-note").style.display = storageOk ? "none" : "block"; }
+
+  /* ---------- Dati di esempio ---------- */
+  function seedData() {
+    const now = new Date();
+    const y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
+    const day = (k, n) => ymd(new Date(y, m - k, k === 0 ? Math.min(n, today) : n));
+    const t = (date, desc, cat, type, amount) => ({ id: uid(), date, desc, cat, type, amount });
+    const sv = (date, amount, kind, note, goalId) => ({ id: uid(), date, amount, kind, note: note || "", goalId: goalId || null });
+    const transactions = [], savings = [];
+    const past = [
+      { terea: [27.5, 22, 27.5, 22], cibo: [12.5, 18, 9.9], spesa: [64, 71], tr: [55, 60], shop: 0, svago: [42, 65], altro: [14.99], saved: 900 },
+      { terea: [22, 27.5, 22, 22], cibo: [14, 22.5], spesa: [58, 80], tr: [58], shop: 59.9, svago: [120], altro: [14.99], saved: 950 },
+      { terea: [27.5, 27.5, 22, 27.5], cibo: [11, 16.5, 25], spesa: [66, 62], tr: [55, 52], shop: 0, svago: [35, 48], altro: [14.99, 32], saved: 1000 },
+      { terea: [22, 22, 27.5, 22], cibo: [19.9, 13], spesa: [70, 59], tr: [60, 55], shop: 129, svago: [210], altro: [14.99], saved: 700 },
+      { terea: [27.5, 22, 22, 27.5], cibo: [12, 15.5, 21], spesa: [74.1, 81.6], tr: [60, 55], shop: 89, svago: [55], altro: [14.99, 18.5], saved: 950 }
+    ];
+    past.forEach((mo, i) => {
+      const k = 5 - i;
+      transactions.push(t(day(k, 1), "Stipendio", "Stipendio", "in", 1650));
+      mo.terea.forEach((v, j) => transactions.push(t(day(k, 2 + j * 7), "Terea", "Terea", "out", v)));
+      mo.cibo.forEach((v, j) => transactions.push(t(day(k, 5 + j * 8), j % 2 ? "Pranzo fuori" : "Cena delivery", "Cibo", "out", v)));
+      mo.spesa.forEach((v, j) => transactions.push(t(day(k, 6 + j * 12), "Spesa al supermercato", "Spesa", "out", v)));
+      mo.tr.forEach((v, j) => transactions.push(t(day(k, 12 + j * 12), "Carburante", "Trasporti", "out", v)));
+      if (mo.shop) transactions.push(t(day(k, 20), "Acquisto online", "Shopping", "out", mo.shop));
+      mo.svago.forEach((v, j) => transactions.push(t(day(k, 15 + j * 7), j ? "Cinema" : "Uscita con amici", "Svago", "out", v)));
+      mo.altro.forEach((v, j) => transactions.push(t(day(k, 10 + j * 9), j ? "Farmacia" : "Ricarica telefono", "Altro", "out", v)));
+      savings.push(sv(day(k, 1), mo.saved, "monthly"));
+    });
+    savings.unshift(sv(day(5, 1), 1000, "initial", "Saldo di partenza"));
+    transactions.push(
+      t(day(0, 1), "Stipendio", "Stipendio", "in", 1650),
+      t(day(0, 2), "Terea", "Terea", "out", 27.5),
+      t(day(0, 2), "Spesa al supermercato", "Spesa", "out", 68.4),
+      t(day(0, 3), "Pranzo fuori", "Cibo", "out", 13.5),
+      t(day(0, 3), "Carburante", "Trasporti", "out", 50),
+      t(day(0, 4), "Cena con amici", "Svago", "out", 38),
+      t(day(0, 4), "Rimborso spese trasferta", "Rimborso", "in", 42.5),
+      t(day(0, 4), "Ricarica telefono", "Altro", "out", 14.99)
+    );
+    savings.push(sv(day(0, 1), 900, "monthly"));
+    // un obiettivo già realizzato, per vedere lo storico
+    const bikeDate = day(2, 18);
+    savings.push(sv(bikeDate, -600, "goal", "Bici da corsa", "g-bici"));
+    const goals = [
+      { id: "g-pc", name: "Nuovo PC", icon: "💻", target: 1200, deadline: null, completedAt: null, spent: 0 },
+      { id: "g-viaggio", name: "Viaggio estivo", icon: "✈️", target: 2500, deadline: y + 1 + "-07", completedAt: null, spent: 0 },
+      { id: "g-emergenza", name: "Fondo emergenza", icon: "🛟", target: 10000, deadline: null, completedAt: null, spent: 0 },
+      { id: "g-bici", name: "Bici da corsa", icon: "🚴", target: 600, deadline: null, completedAt: bikeDate, spent: 600 }
+    ];
+    return normalizeData({ version: VERSION, budget: 800, transactions, goals, savings, lastBackup: null }).state;
+  }
+
+  /* ---------- Normalizzazione (caricamento, migrazione, import) ---------- */
+  function normalizeData(src, keepLastBackup) {
+    if (!src || typeof src !== "object" || !Array.isArray(src.transactions)) throw new Error("Il file non sembra un backup di questa dashboard.");
+    let skipped = 0;
+    const transactions = [];
+    src.transactions.forEach((t) => {
+      const amount = round2(Number(t && t.amount));
+      if (!t || (t.type !== "in" && t.type !== "out") || !(amount > 0) || typeof t.date !== "string" || !DATE_RE.test(t.date) || !String(t.desc || "").trim()) { skipped++; return; }
+      transactions.push({ id: String(t.id || uid()), date: t.date.slice(0, 8) + "01", type: t.type, amount, desc: String(t.desc).trim().slice(0, 60), cat: String(t.cat || "Altro").trim().slice(0, 30) || "Altro" });
+    });
+    const goals = [];
+    const seen = new Set();
+    (Array.isArray(src.goals) ? src.goals : []).forEach((g) => {
+      const target = Math.round(Number(g && g.target));
+      if (!g || typeof g.name !== "string" || !g.name.trim() || !(target > 0)) { skipped++; return; }
+      let id = String(g.id || uid()); if (seen.has(id)) id = uid(); seen.add(id);
+      goals.push({
+        id, name: g.name.trim().slice(0, 40), icon: typeof g.icon === "string" && g.icon ? g.icon.slice(0, 4) : "🎯", target,
+        deadline: typeof g.deadline === "string" && MONTH_RE.test(g.deadline) ? g.deadline : null,
+        completedAt: typeof g.completedAt === "string" && DATE_RE.test(g.completedAt) ? g.completedAt.slice(0, 8) + "01" : null,
+        spent: Number(g.spent) > 0 ? round2(Number(g.spent)) : 0
+      });
+    });
+    const savings = [];
+    (Array.isArray(src.savings) ? src.savings : []).forEach((s) => {
+      const amount = round2(Number(s && s.amount));
+      if (!s || !amount || typeof s.date !== "string" || !DATE_RE.test(s.date)) { skipped++; return; }
+      let kind = SV_KINDS.includes(s.kind) ? s.kind : null;
+      if (!kind) { // dati delle versioni precedenti
+        if (s.initial === true || s.note === "Saldo iniziale") kind = "initial";
+        else kind = amount < 0 ? "withdraw" : "extra";
+      }
+      savings.push({ id: String(s.id || uid()), date: s.date.slice(0, 8) + "01", amount, kind, note: typeof s.note === "string" ? s.note.slice(0, 60) : "", goalId: kind === "goal" && s.goalId ? String(s.goalId) : null });
+    });
+    const budget = Number(src.budget) >= 0 ? Math.round(Number(src.budget)) : 1200;
+    return { state: { version: VERSION, budget, transactions, goals, savings, lastBackup: keepLastBackup || src.lastBackup || null }, skipped };
+  }
+
+  let seededAtLoad = false;
+  function loadState() {
+    const raw = readStore(KEY);
+    if (raw) {
+      try {
+        const s = JSON.parse(raw);
+        if (s && Array.isArray(s.transactions)) {
+          // Le versioni precedenti vengono convertite al conto unico mantenendo i dati
+          return normalizeData(s).state;
+        }
+      } catch (e) { /* dati corrotti */ }
+    }
+    seededAtLoad = true;
+    return { version: VERSION, budget: 0, transactions: [], goals: [], savings: [], lastBackup: null };
+  }
+
+  let state = loadState();
+  // Cronologia per Annulla / Ripeti (resta finché la pagina è aperta)
+  const undoStack = [], redoStack = [];
+  const UNDO_MAX = 60;
+  let lastSaved = JSON.stringify(state);
+  let justSaved = false;
+  writeStore(KEY, lastSaved);
+  function save(label) {
+    const next = JSON.stringify(state);
+    if (next === lastSaved) return;
+    undoStack.push({ snap: lastSaved, label: label || "ultima modifica" });
+    if (undoStack.length > UNDO_MAX) undoStack.shift();
+    redoStack.length = 0;
+    lastSaved = next;
+    writeStore(KEY, next);
+    justSaved = true;
+    updateUndoUi();
+    scheduleSync();
+  }
+  function saveSilent() { lastSaved = JSON.stringify(state); writeStore(KEY, lastSaved); scheduleSync(); }
+  function restore(snap) {
+    const lb = state.lastBackup;
+    state = JSON.parse(snap);
+    state.lastBackup = lb;
+    lastSaved = JSON.stringify(state);
+    writeStore(KEY, lastSaved);
+    scheduleSync();
+  }
+  function undo() {
+    const e = undoStack.pop();
+    if (!e) return;
+    redoStack.push({ snap: lastSaved, label: e.label });
+    restore(e.snap);
+    closeAllModals(); renderAll(); updateUndoUi();
+    toast("↶ Annullato: " + e.label, { redo: true });
+  }
+  function redo() {
+    const e = redoStack.pop();
+    if (!e) return;
+    undoStack.push({ snap: lastSaved, label: e.label });
+    restore(e.snap);
+    closeAllModals(); renderAll(); updateUndoUi();
+    toast("↷ Ripristinato: " + e.label, { undo: true });
+  }
+  function updateUndoUi() {
+    const u = $("undo-btn"), r = $("redo-btn");
+    u.disabled = !undoStack.length; r.disabled = !redoStack.length;
+    u.title = undoStack.length ? "Annulla: " + undoStack[undoStack.length - 1].label + " (Ctrl+Z)" : "Niente da annullare";
+    r.title = redoStack.length ? "Ripeti: " + redoStack[redoStack.length - 1].label + " (Ctrl+Shift+Z)" : "Niente da ripetere";
+  }
+  showStorageNote();
+
+  const now0 = new Date();
+  let view = { y: now0.getFullYear(), m: now0.getMonth() };
+  let txType = "out", txFilter = "all", svKind = "extra";
+
+  /* ---------- Tooltip ---------- */
+  const tip = $("tip");
+  function moveTip(ev) {
+    const p = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = ev.clientX + p, y = ev.clientY - h - p;
+    if (x + w > window.innerWidth - 8) x = ev.clientX - w - p;
+    if (x < 8) x = 8;
+    if (y < 8) y = ev.clientY + p;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  }
+  function bindTip(el, htmlFn) {
+    el.addEventListener("mouseenter", (e) => { tip.innerHTML = htmlFn(); tip.style.opacity = "1"; moveTip(e); });
+    el.addEventListener("mousemove", moveTip);
+    el.addEventListener("mouseleave", () => { tip.style.opacity = "0"; });
+  }
+
+  /* ---------- Toast & modal ---------- */
+  let toastTimer;
+  function toast(msg, opt) {
+    const t = $("toast");
+    const withUndo = (opt && opt.undo) || (justSaved && !(opt && opt.redo));
+    const withRedo = opt && opt.redo && redoStack.length;
+    justSaved = false;
+    t.innerHTML = "<span>" + esc(msg) + "</span>";
+    if (withUndo && undoStack.length) {
+      const b = document.createElement("button"); b.textContent = "↶ Annulla"; b.onclick = () => { t.classList.remove("show"); undo(); }; t.appendChild(b);
+    } else if (withRedo) {
+      const b = document.createElement("button"); b.textContent = "↷ Ripeti"; b.onclick = () => { t.classList.remove("show"); redo(); }; t.appendChild(b);
+    }
+    t.classList.toggle("has-act", !!t.querySelector("button"));
+    t.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), t.querySelector("button") ? 5000 : 2400);
+  }
+  function closeAllModals() { ["modal", "done-modal", "edit-modal", "export-modal"].forEach((id) => $(id).classList.remove("open")); }
+  let modalAction = null;
+  function confirmBox(title, text, okLabel, action, okClass) {
+    $("modal-title").textContent = title;
+    $("modal-text").textContent = text;
+    $("modal-ok").textContent = okLabel || "";
+    $("modal-ok").className = "btn " + (okClass || "danger");
+    $("modal-ok").style.display = action ? "" : "none";
+    $("modal-cancel").textContent = action ? "Annulla" : "Chiudi";
+    modalAction = action;
+    $("modal").classList.add("open");
+    $("modal-cancel").focus();
+  }
+  function closeModal() { $("modal").classList.remove("open"); modalAction = null; }
+  $("modal-cancel").onclick = closeModal;
+  $("modal-ok").onclick = () => { const a = modalAction; closeModal(); if (a) a(); };
+  $("modal").addEventListener("click", (e) => { if (e.target.id === "modal" && !choosing) closeModal(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { if (!choosing) closeModal(); closeExport(); closeDone(); closeEdit(); return; }
+    const mod = e.ctrlKey || e.metaKey;
+    if (!mod) return;
+    const tag = (document.activeElement && document.activeElement.tagName) || "";
+    if (/INPUT|TEXTAREA|SELECT/.test(tag)) return; // nei campi lascia l'annulla del browser
+    const k = e.key.toLowerCase();
+    if (k === "z" && !e.shiftKey) { e.preventDefault(); undo(); }
+    else if ((k === "z" && e.shiftKey) || k === "y") { e.preventDefault(); redo(); }
+  });
+
+  /* ---------- Calcoli ---------- */
+  const monthPrefix = (y, m) => y + "-" + pad(m + 1) + "-";
+  const inMonth = (d, y, m) => d.startsWith(monthPrefix(y, m));
+  const monthTx = (y, m) => state.transactions.filter((t) => inMonth(t.date, y, m));
+  const monthFlows = (y, m) => state.savings.filter((s) => FLOW_KINDS.has(s.kind) && inMonth(s.date, y, m));
+  const balanceUntil = (dateStr) => round2(sum(state.savings.filter((s) => s.date <= dateStr), (s) => s.amount));
+  const balanceNow = () => round2(sum(state.savings, (s) => s.amount));
+  const activeGoals = () => state.goals.filter((g) => !g.completedAt);
+  const doneGoals = () => state.goals.filter((g) => g.completedAt).sort((a, b) => b.completedAt.localeCompare(a.completedAt));
+  const isCurrentMonth = (y, m) => { const n = new Date(); return y === n.getFullYear() && m === n.getMonth(); };
+  const isFutureMonth = (y, m) => { const n = new Date(); return y > n.getFullYear() || (y === n.getFullYear() && m > n.getMonth()); };
+  function monthStats(y, m) {
+    const tx = monthTx(y, m);
+    const salaryTx = tx.filter((t) => t.type === "in" && t.cat === "Stipendio");
+    const salary = round2(sum(salaryTx, (t) => t.amount));
+    const inc = round2(sum(tx.filter((t) => t.type === "in"), (t) => t.amount));
+    const out = round2(sum(tx.filter((t) => t.type === "out"), (t) => t.amount));
+    const saved = round2(sum(monthFlows(y, m), (s) => s.amount));
+    const free = round2(inc - out - saved);
+    return { tx, salaryTx, salary, inc, other: round2(inc - salary), out, saved, free, endBalance: balanceUntil(lastDayOf(y, m)) };
+  }
+  function hasData(y, m) {
+    return state.transactions.some((t) => inMonth(t.date, y, m)) || state.savings.some((s) => FLOW_KINDS.has(s.kind) && inMonth(s.date, y, m));
+  }
+
+  /* ---------- Vista mese ---------- */
+  function setView(y, m) {
+    const d = new Date(y, m, 1);
+    view = { y: d.getFullYear(), m: d.getMonth() };
+    setDateDefaults();
+    renderAll();
+  }
+  // Ogni voce appartiene a un mese: internamente la data è sempre il giorno 1
+  const viewDate = () => ymd(new Date(view.y, view.m, 1));
+  const toMonthVal = (d) => d.slice(0, 7);
+  function setDateDefaults() {
+    const mn = monthName(view.y, view.m);
+    $("f-submit").textContent = "+ Aggiungi a " + mn;
+    setSvKind(svKind);
+  }
+
+  /* ---------- Render: dati del mese + KPI ---------- */
+  function renderMonth() {
+    const { y, m } = view;
+    const st = monthStats(y, m);
+    const future = isFutureMonth(y, m);
+    $("month-label").innerHTML = esc(monthLong(y, m)) + (future ? '<span class="future-tag">futuro</span>' : "");
+    const maxD = new Date(); maxD.setMonth(maxD.getMonth() + 24);
+    $("next-month").disabled = y > maxD.getFullYear() || (y === maxD.getFullYear() && m >= maxD.getMonth());
+    $("mc-title").textContent = monthLong(y, m);
+    $("alloc-month").textContent = monthLong(y, m);
+    $("tx-list-title").textContent = "Movimenti di " + monthName(y, m);
+
+    const status = $("mc-status");
+    if (st.salary > 0) { status.textContent = "✓ Stipendio inserito"; status.className = "status ok"; }
+    else { status.textContent = "Da compilare"; status.className = "status todo"; }
+
+    // valori nei campi (non sovrascrive mentre li stai modificando)
+    const sal = $("mc-salary"), sv = $("mc-saved");
+    if (document.activeElement !== sal) sal.value = st.salary ? st.salary : "";
+    if (document.activeElement !== sv) sv.value = monthFlows(y, m).length ? st.saved : "";
+
+    $("mc-other").textContent = eur.format(st.other);
+    $("mc-out").textContent = eur.format(st.out);
+    $("mc-free").textContent = eur.format(st.free);
+    $("mc-free").style.color = st.free < 0 ? "var(--crit-text)" : "";
+    $("mc-free-p").textContent = st.inc > 0 ? (st.free >= 0 ? pctOf(st.free, st.inc) + "% delle entrate" : "sotto zero") : "entrate − spese − risparmi";
+    $("mc-total").textContent = eur.format(st.endBalance);
+    $("adj-month").textContent = monthLong(y, m);
+
+    const alert = $("over-alert");
+    if (st.free < 0 && st.inc > 0) {
+      alert.style.display = "block";
+      alert.textContent = "⚠️ Tra spese e risparmi hai usato " + eur.format(-st.free) + " in più delle entrate di " + monthName(y, m) + ".";
+    } else alert.style.display = "none";
+
+    // KPI
+    $("k-in").textContent = eur.format(st.inc);
+    $("k-in-sub").textContent = st.salary ? "stipendio " + eur0.format(st.salary) + (st.other ? " + altre " + eur0.format(st.other) : "") : "stipendio non inserito";
+    $("k-out").textContent = eur.format(st.out);
+    $("k-out-sub").textContent = st.inc ? pctOf(st.out, st.inc) + "% delle entrate" : st.tx.filter((t) => t.type === "out").length + " uscite";
+    $("k-saved").textContent = eur.format(st.saved);
+    $("k-saved-sub").textContent = st.inc ? pctOf(st.saved, st.inc) + "% delle entrate" : "nel mese";
+    $("k-total").textContent = eur.format(st.endBalance);
+    const prevBal = balanceUntil(lastDayOf(y, m - 1));
+    const delta = round2(st.endBalance - prevBal);
+    $("k-total-sub").textContent = (delta >= 0 ? "+" : "−") + eur0.format(Math.abs(delta)) + " rispetto al mese prima";
+
+    renderDonut(st);
+    renderBudget(st);
+  }
+
+  /* ---------- Grafico a ciambella ---------- */
+  // "Altro" (e le vecchie categorie) restano in grigio, raggruppate in "Altre spese"
+  const CAT_COLOR = { Terea: "--c1", Cibo: "--c2", Spesa: "--c3", Trasporti: "--c4", Shopping: "--c5", Svago: "--c6" };
+  const CAT_ORDER = Object.keys(CAT_COLOR);
+  const CAT_ICON = { Terea: "🚬", Cibo: "🍕", Spesa: "🛒", Trasporti: "⛽", Shopping: "🛍️", Svago: "🎉", Altro: "📦", Stipendio: "💼", Extra: "✨", Rimborso: "↩️", Regalo: "🎁" };
+  const SVGNS = "http://www.w3.org/2000/svg";
+
+  function renderDonut(st) {
+    const { tx, inc, saved, free } = st;
+    const byCat = {};
+    tx.filter((t) => t.type === "out").forEach((t) => { byCat[t.cat] = (byCat[t.cat] || 0) + t.amount; });
+    const slices = [];
+    if (saved > 0) slices.push({ k: "save", name: "Messo da parte", val: saved, color: "var(--save)" });
+    CAT_ORDER.forEach((c) => { if (byCat[c] > 0) slices.push({ k: "c-" + c, name: c, val: byCat[c], color: "var(" + CAT_COLOR[c] + ")" }); });
+    const others = Object.entries(byCat).filter(([c, v]) => !CAT_COLOR[c] && v > 0).sort((a, b) => b[1] - a[1]);
+    if (others.length) {
+      const v = others.reduce((a, [, x]) => a + x, 0);
+      slices.push({ k: "other", name: others.length === 1 ? others[0][0] : "Altre spese", val: v, color: "var(--other)",
+        detail: others.length > 1 ? others.map(([c, x]) => c + " " + eur0.format(x)).join(" · ") : "" });
+    }
+    const usedTotal = slices.reduce((a, x) => a + x.val, 0);
+    const base = Math.max(inc, usedTotal);
+
+    const svg = $("donut-svg");
+    svg.innerHTML = "";
+    const r = 80, C = 2 * Math.PI * r;
+    const g = document.createElementNS(SVGNS, "g");
+    g.setAttribute("transform", "rotate(-90 100 100)");
+    const mk = (attrs) => { const c = document.createElementNS(SVGNS, "circle"); Object.entries(attrs).forEach(([k, v]) => c.setAttribute(k, v)); return c; };
+    g.appendChild(mk({ cx: 100, cy: 100, r, fill: "none", stroke: "var(--surface-2)", "stroke-width": 28 }));
+    const gap = slices.length > 1 || (free > 0 && slices.length) ? 2 : 0;
+    let off = 0;
+    if (base > 0) slices.forEach((sl) => {
+      const len = (sl.val / base) * C;
+      const dash = Math.max(len - gap, 0.6);
+      const c = mk({ class: "sl", cx: 100, cy: 100, r, fill: "none", stroke: sl.color, "stroke-width": 28, "stroke-dasharray": dash.toFixed(2) + " " + (C - dash).toFixed(2), "stroke-dashoffset": (-off).toFixed(2) });
+      c.dataset.k = sl.k;
+      bindTip(c, () => tipFor(sl, inc));
+      c.addEventListener("mouseenter", () => highlight(sl.k));
+      c.addEventListener("mouseleave", () => highlight(null));
+      g.appendChild(c);
+      off += len;
+    });
+    svg.appendChild(g);
+    svg.setAttribute("aria-label", "Ripartizione delle entrate: " + slices.map((x) => x.name + " " + eur0.format(x.val)).join(", ") + (free > 0 ? ", ancora disponibile " + eur0.format(free) : ""));
+    $("dc-v").textContent = eur0.format(inc);
+    $("dc-s").textContent = inc > 0 ? "risparmiato " + pctOf(Math.max(saved, 0), inc) + "%" : "nessuna entrata";
+
+    const lg = $("donut-legend");
+    lg.innerHTML = "";
+    if (!slices.length && !(free > 0)) { lg.innerHTML = '<div class="empty">Nessun dato in questo mese: inserisci lo stipendio qui sopra.</div>'; return; }
+    const row = (sl, cls) => {
+      const d = document.createElement("div");
+      d.className = "lg-row" + (cls ? " " + cls : "");
+      d.dataset.k = sl.k;
+      d.innerHTML =
+        '<span class="sw' + (sl.k === "free" ? " track" : "") + '" style="' + (sl.k === "free" ? "" : "background:" + sl.color) + '"></span>' +
+        '<span class="nm">' + esc(sl.name) + (sl.detail ? "<small>" + esc(sl.detail) + "</small>" : "") + "</span>" +
+        '<span class="am">' + eur0.format(sl.val) + "</span>" +
+        '<span class="pc">' + (inc > 0 ? pctOf(sl.val, inc) + "%" : "–") + "</span>";
+      bindTip(d, () => tipFor(sl, inc));
+      d.addEventListener("mouseenter", () => highlight(sl.k));
+      d.addEventListener("mouseleave", () => highlight(null));
+      lg.appendChild(d);
+    };
+    const sep = () => { const s = document.createElement("div"); s.className = "lg-sep"; lg.appendChild(s); };
+    slices.forEach((sl) => { row(sl, sl.k === "save" ? "save" : ""); if (sl.k === "save" && slices.length > 1) sep(); });
+    if (free > 0) { sep(); row({ k: "free", name: "Ancora disponibile", val: free }); }
+  }
+  function tipFor(sl, inc) {
+    return "<b>" + esc(sl.name) + "</b><br>" + eur.format(sl.val) + (inc > 0 ? " · " + pctOf(sl.val, inc) + "% delle entrate" : "") + (sl.detail ? "<br>" + esc(sl.detail) : "");
+  }
+  function highlight(k) {
+    const d = $("donut");
+    d.classList.toggle("hl", !!k && k !== "free");
+    d.querySelectorAll("circle.sl").forEach((c) => c.classList.toggle("on", c.dataset.k === k));
+    document.querySelectorAll("#donut-legend .lg-row").forEach((r) => r.classList.toggle("on", r.dataset.k === k));
+  }
+
+  function renderBudget(st) {
+    const budget = state.budget, out = st.out;
+    $("budget-value").textContent = budget > 0 ? eur0.format(budget) : "non impostato";
+    const r = budget > 0 ? out / budget : 0;
+    const f = $("budget-bar").firstElementChild;
+    f.style.width = Math.min(r * 100, 100) + "%";
+    f.style.background = r > 1 ? "var(--crit)" : r >= 0.8 ? "var(--warn)" : "var(--spend)";
+    $("budget-bar").setAttribute("aria-valuenow", Math.round(r * 100));
+    $("budget-pct").textContent = budget > 0 ? (r > 1 ? "⛔ superato di " + eur0.format(out - budget) : (r >= 0.8 ? "⚠️ " : "") + Math.round(r * 100) + "% · restano " + eur0.format(budget - out)) : "";
+  }
+
+  /* ---------- Andamento 6 mesi ---------- */
+  function niceMax(v) {
+    if (v <= 0) return { max: 2000, step: 500 };
+    const raw = v / 4, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const step = [1, 2, 2.5, 5, 10].map((k) => k * mag).find((x) => x >= raw);
+    return { max: step * 4, step };
+  }
+  function renderTrend() {
+    const months = [];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(view.y, view.m - i, 1);
+      const y = d.getFullYear(), m = d.getMonth();
+      months.push(Object.assign({ y, m, sel: i === 0 }, monthStats(y, m)));
+    }
+    const top = Math.max(...months.map((x) => Math.max(x.inc, x.out + Math.max(x.saved, 0))), 0);
+    const { max, step } = niceMax(top);
+    const yax = $("t-y"), plot = $("t-plot"), xax = $("t-x");
+    yax.innerHTML = ""; plot.innerHTML = ""; xax.innerHTML = "";
+    for (let v = 0; v <= max + 0.001; v += step) {
+      const py = (v / max) * 100;
+      const lab = document.createElement("span");
+      lab.style.bottom = py + "%";
+      lab.textContent = v >= 1000 ? (v / 1000).toLocaleString("it-IT", { maximumFractionDigits: 1 }) + "k €" : Math.round(v) + " €";
+      yax.appendChild(lab);
+      if (v > 0) { const gl = document.createElement("div"); gl.className = "t-grid"; gl.style.bottom = py + "%"; plot.appendChild(gl); }
+    }
+    const cols = document.createElement("div");
+    cols.className = "t-cols";
+    plot.appendChild(cols);
+    months.forEach((mo) => {
+      const col = document.createElement("div");
+      col.className = "t-col" + (mo.sel ? " sel" : "");
+      const sp = (mo.out / max) * 100, sv = (Math.max(mo.saved, 0) / max) * 100;
+      col.innerHTML =
+        '<div class="t-stack" style="height:' + (sp + sv) + '%">' +
+          (mo.out > 0 ? '<div class="sp" style="flex:' + mo.out + ' 1 0"></div>' : "") +
+          (mo.saved > 0 ? '<div class="sv" style="flex:' + mo.saved + ' 1 0"></div>' : "") +
+        "</div>" +
+        (mo.inc > 0 ? '<div class="t-inc" style="bottom:calc(' + (mo.inc / max) * 100 + '% - 1px)"></div>' : "");
+      bindTip(col, () =>
+        "<b style='text-transform:capitalize'>" + esc(monthLong(mo.y, mo.m)) + "</b><br>" +
+        "Entrate: " + eur.format(mo.inc) + "<br>Spese: " + eur.format(mo.out) + "<br>Messo da parte: " + eur.format(mo.saved) +
+        "<br>Disponibile: " + eur.format(mo.free) + (mo.inc > 0 ? "<br>Tasso di risparmio: " + pctOf(mo.saved, mo.inc) + "%" : "") +
+        "<br>Risparmi a fine mese: " + eur.format(mo.endBalance));
+      col.addEventListener("click", () => setView(mo.y, mo.m));
+      cols.appendChild(col);
+      const xl = document.createElement("div");
+      if (mo.sel) xl.className = "sel";
+      xl.innerHTML = "<b>" + monthName(mo.y, mo.m, { month: "short" }).replace(".", "") + "</b>" + (mo.inc > 0 ? pctOf(mo.saved, mo.inc) + "%" : "–");
+      xax.appendChild(xl);
+    });
+  }
+
+  /* ---------- Registro movimenti ---------- */
+  function renderTxList() {
+    const tx = monthTx(view.y, view.m);
+    const ul = $("tx-list");
+    ul.innerHTML = "";
+    const shown = tx.filter((t) => txFilter === "all" || t.type === txFilter).reverse(); // ultime inserite in cima
+    if (!shown.length) ul.innerHTML = '<li style="display:block;border:0"><div class="empty">Nessun movimento da mostrare.</div></li>';
+    shown.forEach((t) => {
+      const li = document.createElement("li");
+      const col = t.type === "out" ? (CAT_COLOR[t.cat] ? "var(" + CAT_COLOR[t.cat] + ")" : "var(--other)") : "";
+      li.innerHTML =
+        '<div class="tx-ico">' + (CAT_ICON[t.cat] || (t.type === "in" ? "💶" : "📦")) + (col ? '<i style="background:' + col + '"></i>' : "") + "</div>" +
+        '<div class="tx-desc"><div class="d">' + esc(t.desc) + '</div><span class="chip">' + esc(t.cat) + "</span></div>" +
+        '<div class="amt ' + t.type + '">' + (t.type === "in" ? "+" : "−") + eur.format(t.amount) + "</div>" +
+        '<span class="row-acts"><button class="edit" aria-label="Modifica ' + esc(t.desc) + '" title="Modifica">✎</button><button class="del" aria-label="Elimina ' + esc(t.desc) + '" title="Elimina">×</button></span>';
+      li.querySelector(".del").onclick = () => { state.transactions = state.transactions.filter((x) => x.id !== t.id); save("eliminazione “" + t.desc + "”"); renderAll(); toast("Movimento eliminato"); };
+      li.querySelector(".edit").onclick = () => openEdit("tx", t.id);
+      li.querySelector(".tx-desc").onclick = () => openEdit("tx", t.id);
+      ul.appendChild(li);
+    });
+  }
+
+  /* ---------- Conto risparmi ---------- */
+  function renderSavings() {
+    const total = balanceNow();
+    const st = monthStats(view.y, view.m);
+    $("sv-total").textContent = eur.format(total);
+    $("sv-total").style.color = total < 0 ? "var(--crit-text)" : "";
+    $("sv-month").innerHTML = '<span class="delta' + (st.saved < 0 ? " neg" : "") + '">' + (st.saved >= 0 ? "+" : "−") + eur.format(Math.abs(st.saved)) + "</span> messi da parte a " + esc(monthName(view.y, view.m));
+    $("sv-rate").textContent = st.inc > 0 ? pctOf(st.saved, st.inc) + "%" : "–";
+
+    // Movimenti conto
+    const ul = $("sv-list");
+    ul.innerHTML = "";
+    const list = state.savings.map((s, i) => [s, i]).sort((a, b) => b[0].date.localeCompare(a[0].date) || b[1] - a[1]).map((x) => x[0]);
+    $("svh-count").textContent = list.length ? list.length + " movimenti" : "";
+    if (!list.length) ul.innerHTML = '<li style="display:block;border:0"><div class="empty">Nessun movimento ancora.</div></li>';
+    const thisYear = new Date().getFullYear();
+    list.forEach((s) => {
+      const d = parseYmd(s.date);
+      const li = document.createElement("li");
+      const title = s.kind === "goal" ? "🏆 " + (s.note || "Obiettivo") : s.kind === "monthly" ? "Risparmio di " + monthLong(d.getFullYear(), d.getMonth()) : s.note || KIND_LABEL[s.kind];
+      const chip = KIND_LABEL[s.kind];
+      li.innerHTML =
+        '<div class="tx-date"><b style="font-size:13px;text-transform:uppercase">' + d.toLocaleDateString("it-IT", { month: "short" }).replace(".", "") + "</b><span>" + d.getFullYear() + "</span></div>" +
+        '<div class="tx-desc"><div class="d">' + esc(title) + '</div><span class="chip">' + esc(chip) + "</span></div>" +
+        '<div class="amt' + (s.amount >= 0 ? " in" : "") + '">' + (s.amount >= 0 ? "+" : "−") + eur.format(Math.abs(s.amount)) + "</div>" +
+        '<span class="row-acts"><button class="edit" aria-label="Modifica movimento" title="Modifica">✎</button><button class="del" aria-label="Elimina movimento" title="Elimina">×</button></span>';
+      li.querySelector(".del").onclick = () => {
+        if (s.kind === "goal") {
+          confirmBox("Eliminare questo movimento?", "È la spesa registrata quando hai completato “" + (s.note || "obiettivo") + "”. Se la elimini, i " + eur.format(-s.amount) + " tornano nel saldo; l'obiettivo resta nello storico.", "Elimina", () => {
+            state.savings = state.savings.filter((x) => x.id !== s.id);
+            const g = state.goals.find((x) => x.id === s.goalId); if (g) g.spent = 0;
+            save("eliminazione movimento risparmi"); renderAll(); toast("Movimento eliminato");
+          });
+          return;
+        }
+        state.savings = state.savings.filter((x) => x.id !== s.id); save("eliminazione movimento risparmi"); renderAll(); toast("Movimento eliminato");
+      };
+      li.querySelector(".edit").onclick = () => openEdit("sv", s.id);
+      li.querySelector(".tx-desc").onclick = () => openEdit("sv", s.id);
+      ul.appendChild(li);
+    });
+  }
+
+  /* ---------- Obiettivi ---------- */
+  function renderGoals() {
+    const total = balanceNow();
+    const act = activeGoals();
+    const wrap = $("goals");
+    wrap.innerHTML = "";
+    const ready = act.filter((g) => total >= g.target).length;
+    $("goals-count").textContent = act.length ? ready + " di " + act.length + " a portata di mano" : "";
+    $("goals-note").textContent = act.length ? "Tutti calcolati sullo stesso saldo di " + eur.format(total) + ", in ordine di importanza." : "";
+    if (!act.length) wrap.innerHTML = '<div class="empty">Nessun obiettivo attivo: creane uno qui sotto.</div>';
+    const now = new Date();
+    act.forEach((g, i) => {
+      const p = g.target > 0 ? Math.max(0, Math.min(total / g.target, 1)) : 0;
+      const isReady = total >= g.target;
+      const missing = Math.max(g.target - total, 0);
+      let meta = "", plan = "";
+      if (g.deadline && MONTH_RE.test(g.deadline)) {
+        const [dy, dm] = g.deadline.split("-").map(Number);
+        const left = (dy - now.getFullYear()) * 12 + (dm - 1 - now.getMonth()) + 1;
+        meta = "entro " + new Date(dy, dm - 1, 1).toLocaleDateString("it-IT", { month: "short", year: "numeric" });
+        if (!isReady) plan = left > 0 ? "≈ " + eur0.format(Math.ceil(missing / left)) + "/mese per " + left + (left === 1 ? " mese" : " mesi") : '<span class="badge late">Scadenza passata</span>';
+      }
+      const el = document.createElement("div");
+      el.className = "goal" + (isReady ? " ready" : "");
+      el.innerHTML =
+        '<div class="goal-top">' +
+          '<span class="prio" title="Priorità ' + (i + 1) + '">' + (i + 1) + "</span>" +
+          '<div class="goal-icon">' + esc(g.icon || "🎯") + "</div>" +
+          '<div class="goal-name"><span class="n">' + esc(g.name) + '</span><span class="m">' + esc(meta || "nessuna scadenza") + "</span></div>" +
+          '<div class="goal-amt"><b>' + eur0.format(Math.min(Math.max(total, 0), g.target)) + "</b><span>di " + eur0.format(g.target) + "</span></div>" +
+        "</div>" +
+        '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + Math.round(p * 100) + '" aria-label="Avanzamento ' + esc(g.name) + '"><div style="width:' + (p * 100).toFixed(1) + '%"></div></div>' +
+        '<div class="goal-foot">' +
+          "<span>" + (isReady ? '<span class="badge">✅ Hai già la cifra</span>' : "<b>" + Math.round(p * 100) + "%</b> · mancano " + eur0.format(missing) + (plan ? " · " + plan : "")) + "</span>" +
+          '<span class="goal-acts">' +
+            '<button class="mini up" title="Più importante" aria-label="Sposta su"' + (i === 0 ? " disabled" : "") + ">↑</button>" +
+            '<button class="mini dn" title="Meno importante" aria-label="Sposta giù"' + (i === act.length - 1 ? " disabled" : "") + ">↓</button>" +
+            '<button class="mini ' + (isReady ? "go" : "") + ' ok">✓ Fatto</button>' +
+            '<button class="mini ed" title="Modifica" aria-label="Modifica obiettivo">✎</button>' +
+            '<button class="mini rm" title="Elimina" aria-label="Elimina obiettivo">×</button>' +
+          "</span>" +
+        "</div>";
+      el.querySelector(".up").onclick = () => moveGoal(g.id, -1);
+      el.querySelector(".dn").onclick = () => moveGoal(g.id, 1);
+      el.querySelector(".ok").onclick = () => openDone(g);
+      el.querySelector(".ed").onclick = () => openEdit("goal", g.id);
+      el.querySelector(".rm").onclick = () => confirmBox("Eliminare l'obiettivo?", "“" + g.name + "” verrà eliminato. Il saldo del conto risparmi non cambia.", "Elimina", () => {
+        state.goals = state.goals.filter((x) => x.id !== g.id); save("eliminazione obiettivo “" + g.name + "”"); renderAll(); toast("Obiettivo eliminato");
+      });
+      wrap.appendChild(el);
+    });
+
+    // Storico completati
+    const done = doneGoals();
+    const dl = $("done-list");
+    dl.innerHTML = "";
+    $("done-count").textContent = done.length ? done.length + (done.length === 1 ? " obiettivo" : " obiettivi") : "";
+    if (!done.length) dl.innerHTML = '<li style="display:block;border:0"><div class="empty">Quando realizzi un obiettivo, segnalo con “✓ Fatto”: lo ritrovi qui.</div></li>';
+    done.forEach((g) => {
+      const d = parseYmd(g.completedAt);
+      const li = document.createElement("li");
+      li.innerHTML =
+        '<div class="goal-icon">' + esc(g.icon || "🎯") + "</div>" +
+        '<div style="min-width:0"><div class="nm">' + esc(g.name) + '</div><div class="m">completato a ' +
+          monthLong(d.getFullYear(), d.getMonth()) + " · " + (g.spent > 0 ? "speso " + eur0.format(g.spent) : "obiettivo " + eur0.format(g.target)) + "</div></div>" +
+        '<div class="acts"><button class="mini ed" title="Modifica" aria-label="Modifica">✎</button><button class="mini undo" title="Rimetti tra gli obiettivi attivi">↺ Riapri</button><button class="mini rm" aria-label="Elimina dallo storico">×</button></div>';
+      li.querySelector(".ed").onclick = () => openEdit("goal", g.id);
+      li.querySelector(".undo").onclick = () => confirmBox("Riaprire l'obiettivo?", "“" + g.name + "” torna tra gli obiettivi attivi" + (g.spent > 0 ? " e i " + eur.format(g.spent) + " scalati tornano nel conto risparmi." : "."), "Riapri", () => {
+        state.savings = state.savings.filter((s) => !(s.kind === "goal" && s.goalId === g.id));
+        g.completedAt = null; g.spent = 0;
+        save("riapertura “" + g.name + "”"); renderAll(); toast("Obiettivo riaperto");
+      }, "save");
+      li.querySelector(".rm").onclick = () => confirmBox("Eliminare dallo storico?", "“" + g.name + "” sparisce dallo storico. L'eventuale spesa scalata dal conto resta registrata nei movimenti.", "Elimina", () => {
+        state.goals = state.goals.filter((x) => x.id !== g.id); save("eliminazione dallo storico"); renderAll(); toast("Eliminato dallo storico");
+      });
+      dl.appendChild(li);
+    });
+  }
+  function moveGoal(id, dir) {
+    const act = activeGoals();
+    const i = act.findIndex((g) => g.id === id), j = i + dir;
+    if (i < 0 || j < 0 || j >= act.length) return;
+    [act[i], act[j]] = [act[j], act[i]];
+    state.goals = [...act, ...state.goals.filter((g) => g.completedAt)];
+    save("ordine obiettivi"); renderGoals();
+  }
+
+  // Modale "obiettivo completato"
+  let doneGoal = null;
+  function openDone(g) {
+    doneGoal = g;
+    const total = balanceNow();
+    $("dm-text").textContent = "Segna “" + g.name + "” come realizzato: lo sposto nello storico degli obiettivi completati." + (total < g.target ? " (Nota: il saldo attuale è " + eur.format(total) + ", sotto la cifra dell'obiettivo.)" : "");
+    $("dm-spent").checked = true;
+    $("dm-amount").value = g.target;
+    $("dm-date").value = toMonthVal(ymd(new Date()));
+    $("dm-fields").style.display = "";
+    $("done-modal").classList.add("open");
+    $("dm-amount").focus();
+  }
+  function closeDone() { $("done-modal").classList.remove("open"); doneGoal = null; }
+  $("dm-cancel").onclick = closeDone;
+  $("done-modal").addEventListener("click", (e) => { if (e.target.id === "done-modal") closeDone(); });
+  $("dm-spent").addEventListener("change", (e) => { $("dm-fields").style.display = e.target.checked ? "" : "none"; });
+  $("dm-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const g = doneGoal; if (!g) return;
+    const spent = $("dm-spent").checked;
+    const amount = round2(parseFloat($("dm-amount").value));
+    const date = MONTH_RE.test($("dm-date").value) ? $("dm-date").value + "-01" : ymd(new Date(new Date().getFullYear(), new Date().getMonth(), 1));
+    if (spent) {
+      if (!(amount > 0)) { toast("Inserisci l'importo speso"); return; }
+      if (amount > balanceNow() + 0.001) { toast("Sul conto ci sono solo " + eur.format(Math.max(balanceNow(), 0))); return; }
+      state.savings.push({ id: uid(), date, amount: -amount, kind: "goal", note: g.name, goalId: g.id });
+    }
+    g.completedAt = date; g.spent = spent ? amount : 0;
+    save("completamento “" + g.name + "”"); closeDone(); renderAll();
+    toast("🏆 “" + g.name + "” completato!");
+  });
+
+  /* ---------- Modifica di una voce ---------- */
+  let editing = null;
+  const optionList = (opts, sel) => opts.map(([v, l]) => '<option value="' + esc(v) + '"' + (v === sel ? " selected" : "") + ">" + esc(l) + "</option>").join("");
+  function catOptions(type, current) {
+    const list = [...CATS[type]];
+    if (current && !list.includes(current)) list.push(current);
+    return optionList(list.map((c) => [c, c]), current);
+  }
+  function openEdit(kind, id) {
+    const f = $("ed-fields");
+    if (kind === "tx") {
+      const t = state.transactions.find((x) => x.id === id); if (!t) return;
+      $("ed-title").textContent = "Modifica movimento";
+      f.innerHTML =
+        '<label>Tipo<select id="e-type">' + optionList([["out", "Uscita"], ["in", "Entrata"]], t.type) + "</select></label>" +
+        '<label>Categoria<select id="e-cat">' + catOptions(t.type, t.cat) + "</select></label>" +
+        '<label class="full">Descrizione<input type="text" id="e-desc" maxlength="60" required value="' + esc(t.desc) + '"></label>' +
+        '<label>Importo €<input type="number" id="e-amount" min="0.01" step="0.01" required value="' + t.amount + '"></label>' +
+        '<label>Mese<input type="month" id="e-date" required value="' + toMonthVal(t.date) + '"></label>';
+      $("e-type").onchange = () => { $("e-cat").innerHTML = catOptions($("e-type").value, null); };
+    } else if (kind === "sv") {
+      const s = state.savings.find((x) => x.id === id); if (!s) return;
+      $("ed-title").textContent = "Modifica movimento del conto risparmi";
+      const kinds = s.kind === "goal" ? [["goal", KIND_LABEL.goal]] : ["monthly", "extra", "withdraw", "initial", "adjust"].map((k) => [k, KIND_LABEL[k]]);
+      const signed = s.kind === "monthly" || s.kind === "adjust";
+      f.innerHTML =
+        '<label>Tipo<select id="e-kind"' + (s.kind === "goal" ? " disabled" : "") + ">" + optionList(kinds, s.kind) + "</select></label>" +
+        '<label>Importo €<input type="number" id="e-amount" step="0.01" required value="' + (signed ? s.amount : Math.abs(s.amount)) + '"></label>' +
+        '<label>Mese<input type="month" id="e-date" required value="' + toMonthVal(s.date) + '"></label>' +
+        '<label>Nota<input type="text" id="e-note" maxlength="60" value="' + esc(s.note || "") + '"></label>' +
+        '<div class="hint" id="e-hint"></div>';
+      const hint = () => {
+        const k = $("e-kind").value;
+        $("e-hint").textContent = k === "withdraw" || k === "goal" ? "Scrivi l'importo in positivo: viene tolto dal conto."
+          : k === "monthly" || k === "adjust" ? "Importo negativo = soldi tolti dal conto." : "Importo aggiunto al conto.";
+      };
+      $("e-kind").onchange = hint; hint();
+    } else if (kind === "goal") {
+      const g = state.goals.find((x) => x.id === id); if (!g) return;
+      $("ed-title").textContent = "Modifica obiettivo";
+      f.innerHTML =
+        '<label>Icona<input type="text" id="e-icon" maxlength="4" value="' + esc(g.icon || "🎯") + '"></label>' +
+        '<label>Nome<input type="text" id="e-name" maxlength="40" required value="' + esc(g.name) + '"></label>' +
+        '<label>Cifra da raggiungere €<input type="number" id="e-target" min="1" step="1" required value="' + g.target + '"></label>' +
+        '<label>Scadenza (facoltativa)<input type="month" id="e-deadline" value="' + (g.deadline || "") + '"></label>' +
+        (g.completedAt ? '<label>Completato a<input type="month" id="e-done" required value="' + toMonthVal(g.completedAt) + '"></label>' : "");
+    }
+    editing = { kind, id };
+    $("edit-modal").classList.add("open");
+    const first = f.querySelector("input:not([disabled]), select:not([disabled])"); if (first) first.focus();
+  }
+  function closeEdit() { $("edit-modal").classList.remove("open"); editing = null; }
+  $("ed-cancel").onclick = closeEdit;
+  $("edit-modal").addEventListener("click", (e) => { if (e.target.id === "edit-modal") closeEdit(); });
+  $("ed-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!editing) return;
+    const { kind, id } = editing;
+    if (kind === "tx") {
+      const t = state.transactions.find((x) => x.id === id); if (!t) return closeEdit();
+      const amount = round2(parseFloat($("e-amount").value)), date = $("e-date").value + "-01", desc = $("e-desc").value.trim();
+      if (!desc || !(amount > 0) || !DATE_RE.test(date)) { toast("Controlla i campi"); return; }
+      Object.assign(t, { type: $("e-type").value, cat: $("e-cat").value, desc, amount, date });
+      save("modifica “" + desc + "”");
+    } else if (kind === "sv") {
+      const s = state.savings.find((x) => x.id === id); if (!s) return closeEdit();
+      const k = s.kind === "goal" ? "goal" : $("e-kind").value;
+      let amount = round2(parseFloat($("e-amount").value));
+      const date = $("e-date").value + "-01";
+      if (!amount || isNaN(amount) || !DATE_RE.test(date)) { toast("Controlla i campi"); return; }
+      if (k === "withdraw" || k === "goal") amount = -Math.abs(amount);
+      else if (k === "extra" || k === "initial") amount = Math.abs(amount);
+      Object.assign(s, { kind: k, amount, date, note: $("e-note").value.trim().slice(0, 60) });
+      if (k === "goal") { const g = state.goals.find((x) => x.id === s.goalId); if (g) g.spent = -amount; }
+      save("modifica movimento risparmi");
+    } else if (kind === "goal") {
+      const g = state.goals.find((x) => x.id === id); if (!g) return closeEdit();
+      const name = $("e-name").value.trim(), target = Math.round(parseFloat($("e-target").value));
+      if (!name || !(target > 0)) { toast("Controlla i campi"); return; }
+      g.name = name; g.target = target; g.icon = $("e-icon").value.trim() || "🎯";
+      g.deadline = MONTH_RE.test($("e-deadline").value) ? $("e-deadline").value : null;
+      if (g.completedAt && $("e-done") && MONTH_RE.test($("e-done").value)) g.completedAt = $("e-done").value + "-01";
+      save("modifica obiettivo “" + name + "”");
+    }
+    closeEdit(); renderAll(); toast("Modifiche salvate");
+  });
+  $("ed-delete").onclick = () => {
+    if (!editing) return;
+    const { kind, id } = editing;
+    if (kind === "tx") state.transactions = state.transactions.filter((x) => x.id !== id);
+    else if (kind === "sv") {
+      const s = state.savings.find((x) => x.id === id);
+      if (s && s.kind === "goal") { const g = state.goals.find((x) => x.id === s.goalId); if (g) g.spent = 0; }
+      state.savings = state.savings.filter((x) => x.id !== id);
+    } else if (kind === "goal") state.goals = state.goals.filter((x) => x.id !== id);
+    save("eliminazione"); closeEdit(); renderAll(); toast("Eliminato");
+  };
+
+  /* ---------- Form: dati del mese ---------- */
+  $("mc-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const { y, m } = view;
+    const salRaw = $("mc-salary").value.trim(), svRaw = $("mc-saved").value.trim();
+    const salary = salRaw === "" ? 0 : round2(parseFloat(salRaw));
+    const saved = svRaw === "" ? null : round2(parseFloat(svRaw));
+    if (isNaN(salary) || salary < 0 || (saved !== null && isNaN(saved))) { toast("Controlla gli importi"); return; }
+    const date1 = ymd(new Date(y, m, 1));
+
+    // Stipendio: un movimento "Stipendio" nel registro
+    const sal = state.transactions.filter((t) => t.type === "in" && t.cat === "Stipendio" && inMonth(t.date, y, m));
+    if (sal.length === 0 && salary > 0) state.transactions.push({ id: uid(), date: date1, desc: "Stipendio", cat: "Stipendio", type: "in", amount: salary });
+    else if (sal.length) {
+      const rest = round2(sum(sal.slice(1), (t) => t.amount));
+      const first = round2(salary - rest);
+      if (first > 0) sal[0].amount = first;
+      else if (salary === 0) state.transactions = state.transactions.filter((t) => !sal.includes(t));
+      else { toast("Hai più stipendi nel registro: modificali da lì"); return; }
+    }
+
+    // Messo da parte: un movimento "Risparmio del mese" sul conto, calcolato per ottenere il totale indicato
+    if (saved !== null) {
+      const flows = monthFlows(y, m);
+      const monthly = flows.find((s) => s.kind === "monthly");
+      const others = round2(sum(flows.filter((s) => s !== monthly), (s) => s.amount));
+      const need = round2(saved - others);
+      if (monthly) {
+        if (need === 0) state.savings = state.savings.filter((s) => s !== monthly);
+        else monthly.amount = need;
+      } else if (need !== 0) state.savings.push({ id: uid(), date: date1, amount: need, kind: "monthly", note: "", goalId: null });
+    } else {
+      const monthly = monthFlows(y, m).find((s) => s.kind === "monthly");
+      if (monthly) state.savings = state.savings.filter((s) => s !== monthly);
+    }
+    save("dati di " + monthLong(y, m));
+    document.activeElement.blur && document.activeElement.blur();
+    renderAll();
+    toast("Dati di " + monthLong(y, m) + " salvati");
+  });
+  $("go-reg").onclick = () => { $("reg-card").scrollIntoView({ behavior: "smooth", block: "start" }); setTimeout(() => $("f-desc").focus(), 400); };
+
+  // Correzione saldo
+  $("adj-btn").onclick = () => {
+    $("adj-form").hidden = false;
+    $("adj-input").value = monthStats(view.y, view.m).endBalance;
+    $("adj-input").focus(); $("adj-input").select();
+  };
+  $("adj-cancel").onclick = () => { $("adj-form").hidden = true; };
+  $("adj-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const real = round2(parseFloat($("adj-input").value));
+    if (isNaN(real)) return;
+    const { y, m } = view;
+    const date = viewDate();
+    const diff = round2(real - balanceUntil(lastDayOf(y, m)));
+    $("adj-form").hidden = true;
+    if (diff === 0) { toast("Il saldo è già allineato"); return; }
+    state.savings.push({ id: uid(), date, amount: diff, kind: "adjust", note: "", goalId: null });
+    save("rettifica saldo"); renderAll();
+    toast("Saldo allineato (" + (diff > 0 ? "+" : "−") + eur.format(Math.abs(diff)) + ")");
+  });
+
+  /* ---------- Form: registro ---------- */
+  function fillCats() { $("f-cat").innerHTML = CATS[txType].map((c) => '<option value="' + c + '">' + c + "</option>").join(""); }
+  document.querySelectorAll("#tx-seg button").forEach((b) => {
+    b.onclick = () => {
+      txType = b.dataset.type;
+      document.querySelectorAll("#tx-seg button").forEach((x) => x.classList.toggle("on", x === b));
+      fillCats();
+      $("f-desc").placeholder = txType === "in" ? "Descrizione (es. Bonus)" : "Descrizione (es. Spesa)";
+    };
+  });
+  $("tx-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const desc = $("f-desc").value.trim();
+    const amount = round2(parseFloat($("f-amount").value));
+    if (!desc || !(amount > 0)) return;
+    state.transactions.push({ id: uid(), date: viewDate(), desc, cat: $("f-cat").value, type: txType, amount });
+    save("aggiunta “" + desc + "”");
+    $("f-desc").value = ""; $("f-amount").value = "";
+    renderAll();
+    $("f-desc").focus();
+    toast((txType === "in" ? "Entrata" : "Uscita") + " di " + eur.format(amount) + " aggiunta a " + monthName(view.y, view.m));
+  });
+  document.querySelectorAll("#tx-filters button").forEach((b) => {
+    b.onclick = () => {
+      txFilter = b.dataset.f;
+      document.querySelectorAll("#tx-filters button").forEach((x) => x.classList.toggle("on", x === b));
+      renderTxList();
+    };
+  });
+
+  /* ---------- Form: conto risparmi ---------- */
+  const SV_HINT = {
+    extra: "Per versamenti extra oltre a quello mensile (es. bonus, tredicesima). Il risparmio di ogni mese lo inserisci in “Dati del mese”.",
+    withdraw: "Soldi tolti dal conto risparmi e riportati sul conto corrente: abbassano il “messo da parte” del mese.",
+    initial: "Per i soldi che avevi già prima di usare la dashboard: entrano nel saldo, ma non nel “messo da parte” del mese."
+  };
+  function setSvKind(k) {
+    svKind = k;
+    document.querySelectorAll("#sv-seg button").forEach((x) => x.classList.toggle("on", x.dataset.k === k));
+    const mn = monthName(view.y, view.m);
+    $("s-submit").textContent = k === "extra" ? "+ Versamento a " + mn : k === "withdraw" ? "− Prelievo a " + mn : "+ Saldo iniziale (" + mn + ")";
+    $("s-submit").className = k === "withdraw" ? "btn ghost" : "btn save";
+    $("s-hint").textContent = SV_HINT[k];
+  }
+  document.querySelectorAll("#sv-seg button").forEach((b) => { b.onclick = () => setSvKind(b.dataset.k); });
+  $("sv-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const amount = round2(parseFloat($("s-amount").value));
+    const date = viewDate();
+    if (!(amount > 0)) return;
+    const avail = balanceUntil(lastDayOf(view.y, view.m));
+    if (svKind === "withdraw" && amount > avail + 0.001) { toast("A fine " + monthName(view.y, view.m) + " sul conto ci sono solo " + eur.format(Math.max(avail, 0))); return; }
+    state.savings.push({ id: uid(), date, amount: svKind === "withdraw" ? -amount : amount, kind: svKind, note: $("s-note").value.trim().slice(0, 60), goalId: null });
+    save(KIND_LABEL[svKind].toLowerCase());
+    $("s-amount").value = ""; $("s-note").value = "";
+    renderAll();
+    toast(svKind === "withdraw" ? "Prelievo di " + eur.format(amount) + " registrato" : svKind === "initial" ? "Saldo iniziale di " + eur.format(amount) + " registrato" : "Versamento di " + eur.format(amount) + " aggiunto");
+  });
+
+  /* ---------- Form: obiettivi ---------- */
+  function showGoalForm(show) {
+    $("goal-form").hidden = !show;
+    $("add-goal-btn").hidden = show;
+    if (show) $("g-name").focus();
+  }
+  $("add-goal-btn").onclick = () => showGoalForm(true);
+  $("goal-cancel").onclick = () => { $("goal-form").reset(); $("g-icon").value = "🎯"; showGoalForm(false); };
+  $("goal-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = $("g-name").value.trim();
+    const target = Math.round(parseFloat($("g-target").value));
+    const deadline = MONTH_RE.test($("g-deadline").value) ? $("g-deadline").value : null;
+    if (!name || !(target > 0)) return;
+    const act = activeGoals();
+    act.push({ id: uid(), name, icon: $("g-icon").value.trim() || "🎯", target, deadline, completedAt: null, spent: 0 });
+    state.goals = [...act, ...state.goals.filter((g) => g.completedAt)];
+    save("nuovo obiettivo “" + name + "”");
+    $("goal-form").reset(); $("g-icon").value = "🎯";
+    showGoalForm(false); renderAll();
+    toast("Obiettivo “" + name + "” creato");
+  });
+
+  /* ---------- Navigazione mesi & tetto spese ---------- */
+  $("prev-month").onclick = () => setView(view.y, view.m - 1);
+  $("next-month").onclick = () => setView(view.y, view.m + 1);
+  $("add-month-btn").onclick = () => {
+    // primo mese senza dati dopo l'ultimo compilato (o il mese corrente se non c'è nulla)
+    const dates = [...state.transactions.map((t) => t.date), ...state.savings.filter((s) => FLOW_KINDS.has(s.kind)).map((s) => s.date)].sort();
+    let target;
+    if (!dates.length) target = new Date();
+    else { const last = parseYmd(dates[dates.length - 1]); target = new Date(last.getFullYear(), last.getMonth() + 1, 1); }
+    setView(target.getFullYear(), target.getMonth());
+    $("mc-salary").focus();
+    toast("Inserisci i dati di " + monthLong(view.y, view.m));
+  };
+  $("budget-edit-btn").onclick = () => {
+    $("budget-view").hidden = true; $("budget-form").hidden = false;
+    $("budget-input").value = state.budget; $("budget-input").focus(); $("budget-input").select();
+  };
+  $("budget-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const v = parseFloat($("budget-input").value);
+    if (v >= 0) { state.budget = Math.round(v); save("tetto spese"); toast("Tetto spese aggiornato"); }
+    $("budget-form").hidden = true; $("budget-view").hidden = false;
+    renderAll();
+  });
+
+  /* ---------- Tema ---------- */
+  function applyTheme(t) {
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    else document.documentElement.removeAttribute("data-theme");
+    $("theme-txt").textContent = "Tema: " + ({ light: "Chiaro", dark: "Scuro", auto: "Auto" }[t] || "Auto");
+  }
+  let theme = readStore(THEME_KEY) || "auto";
+  applyTheme(theme);
+  $("theme-btn").onclick = () => { theme = theme === "auto" ? "light" : theme === "light" ? "dark" : "auto"; writeStore(THEME_KEY, theme); applyTheme(theme); };
+
+  /* ---------- Backup ---------- */
+  let downloadsP = null;
+  function getDownloads() {
+    if (!downloadsP) {
+      try {
+        downloadsP = (window.claude && typeof window.claude.use === "function") ? Promise.resolve(window.claude.use("downloads")).catch(() => null) : Promise.resolve(null);
+      } catch (e) { downloadsP = Promise.resolve(null); }
+    }
+    return downloadsP;
+  }
+  getDownloads();
+  function fmtDateTime(iso) {
+    const d = new Date(iso);
+    if (isNaN(d)) return "data sconosciuta";
+    return d.toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" }) + " alle " + d.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
+  }
+  function renderBackupInfo() { $("last-backup").textContent = "Ultimo backup: " + (state.lastBackup ? fmtDateTime(state.lastBackup) : "mai"); }
+  function buildBackup() {
+    return JSON.stringify({ app: "dashboard-personale", version: VERSION, exportedAt: new Date().toISOString(),
+      data: { budget: state.budget, transactions: state.transactions, goals: state.goals, savings: state.savings } }, null, 2);
+  }
+  function markBackup() { state.lastBackup = new Date().toISOString(); saveSilent(); renderBackupInfo(); }
+  function openExport(json) { $("export-text").value = json; $("export-modal").classList.add("open"); $("export-copy").focus(); }
+  function closeExport() { $("export-modal").classList.remove("open"); }
+  $("export-close").onclick = closeExport;
+  $("export-modal").addEventListener("click", (e) => { if (e.target.id === "export-modal") closeExport(); });
+  $("export-copy").onclick = async () => {
+    const ta = $("export-text");
+    try { await navigator.clipboard.writeText(ta.value); markBackup(); toast("Backup copiato negli appunti"); }
+    catch (e) { ta.focus(); ta.select(); toast("Testo selezionato: premi Ctrl+C (o ⌘+C) per copiarlo"); }
+  };
+  $("export-btn").onclick = async () => {
+    const json = buildBackup();
+    const filename = "backup-salvadanaio-" + ymd(new Date()) + ".json";
+    // iPhone: foglio di condivisione (Salva su File, AirDrop, Mail…)
+    try {
+      const file = new File([json], filename, { type: "application/json" });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: "Backup Salvadanaio" });
+        markBackup(); toast("Backup pronto: salvalo su File o iCloud");
+        return;
+      }
+    } catch (err) {
+      if (err && err.name === "AbortError") { toast("Esportazione annullata"); return; }
+    }
+    // PC: scaricamento normale
+    try {
+      const url = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+      const a = document.createElement("a");
+      a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      markBackup(); toast("Backup scaricato: " + filename);
+    } catch (e) { openExport(json); }
+  };
+
+  $("import-btn").onclick = () => $("import-file").click();
+  $("import-file").addEventListener("change", async (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!file) return;
+    let parsed, exportedAt;
+    try {
+      const obj = JSON.parse(await file.text());
+      exportedAt = obj && obj.exportedAt;
+      parsed = normalizeData(obj && obj.data && typeof obj.data === "object" ? obj.data : obj, state.lastBackup);
+    } catch (err) {
+      const msg = err instanceof SyntaxError ? "Il file non contiene un JSON valido." : (err && err.message) || "File non leggibile.";
+      confirmBox("Importazione non riuscita", msg + " Assicurati di scegliere un file esportato con “Esporta dati”.", null, null);
+      return;
+    }
+    const ns = parsed.state;
+    const when = exportedAt ? " (esportato il " + fmtDateTime(exportedAt) + ")" : "";
+    const extra = parsed.skipped ? (parsed.skipped === 1 ? " 1 voce non valida verrà ignorata." : " " + parsed.skipped + " voci non valide verranno ignorate.") : "";
+    confirmBox("Importare questo backup?",
+      "“" + file.name + "”" + when + " contiene " + ns.transactions.length + " movimenti, " + ns.goals.length + " obiettivi e un conto risparmi di " +
+      eur.format(sum(ns.savings, (s) => s.amount)) + ". I dati attuali di questo browser verranno sostituiti." + extra,
+      "Importa", () => { state = ns; save("importazione backup"); setView(new Date().getFullYear(), new Date().getMonth()); toast("Backup importato"); }, "save");
+  });
+
+  /* ---------- Footer ---------- */
+  $("seed-btn").onclick = () => confirmBox("Ripristinare i dati di esempio?", "Movimenti, obiettivi e conto risparmi verranno sostituiti con i dati fittizi iniziali.", "Ripristina", () => {
+    state = Object.assign(seedData(), { lastBackup: state.lastBackup }); save("ripristino dati di esempio");
+    setView(new Date().getFullYear(), new Date().getMonth()); toast("Dati di esempio ripristinati");
+  });
+  $("clear-btn").onclick = () => confirmBox("Cancellare tutti i dati?", "Movimenti, obiettivi e conto risparmi verranno eliminati da questo browser. Se non hai un backup, l'operazione non è reversibile.", "Cancella tutto", () => {
+    state = { version: VERSION, budget: state.budget, transactions: [], goals: [], savings: [], lastBackup: state.lastBackup }; save("cancellazione di tutti i dati");
+    setView(new Date().getFullYear(), new Date().getMonth()); toast("Dati cancellati: inizia dallo stipendio di questo mese");
+  });
+
+  /* ---------- Sincronizzazione con il tuo account (claude.ai) ---------- */
+  // Struttura nel cloud (privata, solo tua): data/users/<id>/meta  +  data/users/<id>/m-AAAA-MM (un documento per mese)
+  const SYNC_KEY = "dashboard-personale-sync";
+  let syncFlags = { dirty: false, everSynced: false, seed: false };
+  try { syncFlags = Object.assign(syncFlags, JSON.parse(readStore(SYNC_KEY) || "{}")); } catch (e) {}
+  if (seededAtLoad) syncFlags.seed = true;
+  const saveFlags = () => writeStore(SYNC_KEY, JSON.stringify(syncFlags));
+  saveFlags();
+  let coll = null, syncReady = false, pushing = false, pushAgain = false, syncTimer = null, syncedDocs = {};
+  let choosing = false;
+
+  function canon(v) {
+    if (Array.isArray(v)) return "[" + v.map(canon).join(",") + "]";
+    if (v && typeof v === "object") return "{" + Object.keys(v).sort().filter((k) => v[k] !== undefined).map((k) => JSON.stringify(k) + ":" + canon(v[k])).join(",") + "}";
+    return JSON.stringify(v);
+  }
+  function splitState(st) {
+    const docs = { meta: { version: VERSION, budget: st.budget, goals: st.goals, lastBackup: st.lastBackup || null } };
+    const put = (arr, key) => arr.forEach((x) => {
+      const id = "m-" + x.date.slice(0, 7);
+      (docs[id] = docs[id] || { tx: [], sv: [] })[key].push(x);
+    });
+    put(st.transactions, "tx"); put(st.savings, "sv");
+    return docs;
+  }
+  function joinDocs(map) {
+    const meta = map.meta || {};
+    const months = Object.keys(map).filter((k) => k.startsWith("m-")).sort();
+    const src = {
+      budget: meta.budget, goals: meta.goals || [], lastBackup: meta.lastBackup || null,
+      transactions: months.flatMap((k) => map[k].tx || []), savings: months.flatMap((k) => map[k].sv || [])
+    };
+    return normalizeData(src).state;
+  }
+  const contentKey = (st) => canon({ b: st.budget, g: st.goals, t: st.transactions, s: st.savings });
+
+  function setSync(kind, text, title) {
+    const p = $("sync-pill");
+    p.className = "sync-pill" + (kind === "ok" ? " ok" : kind === "warn" ? " warn" : "");
+    p.textContent = text;
+    p.title = title || "";
+    $("storage-where").textContent = coll ? "Dati salvati sul tuo account claude.ai (sincronizzati tra i dispositivi)" : "Dati salvati solo su questo dispositivo";
+  }
+  $("sync-pill").onclick = () => { if (coll && syncReady) push(); };
+
+  function scheduleSync() {
+    syncFlags.seed = false;
+    syncFlags.dirty = true; saveFlags();
+    if (!coll || !syncReady) return;
+    clearTimeout(syncTimer);
+    setSync("", "🔄 Salvataggio…");
+    syncTimer = setTimeout(push, 700);
+  }
+  async function push() {
+    if (!coll || !syncReady) return;
+    clearTimeout(syncTimer); syncTimer = null;
+    if (pushing) { pushAgain = true; return; }
+    pushing = true;
+    setSync("", "🔄 Salvataggio…");
+    try {
+      const docs = splitState(state);
+      for (const id of Object.keys(docs)) {
+        const c = canon(docs[id]);
+        if (syncedDocs[id] !== c) { await coll.doc(id).set(JSON.parse(JSON.stringify(docs[id]))); syncedDocs[id] = c; }
+      }
+      for (const id of Object.keys(syncedDocs)) {
+        if (!docs[id]) { await coll.doc(id).delete(); delete syncedDocs[id]; }
+      }
+      syncFlags.dirty = false; syncFlags.everSynced = true; saveFlags();
+      setSync("ok", "☁️ Sincronizzato", "I dati sono salvati sul tuo account claude.ai: li ritrovi su PC e telefono.");
+    } catch (e) {
+      const code = e && e.code;
+      if (code === "quota_exceeded") setSync("warn", "⚠️ Spazio cloud pieno", "Lo spazio dati del cloud è pieno. I dati restano in questo browser: esporta un backup.");
+      else setSync("warn", "⚠️ Non sincronizzato", "Non riesco a salvare nel cloud adesso. I dati sono al sicuro in questo browser: tocca per riprovare.");
+      if (code === "unavailable") setTimeout(() => { if (syncFlags.dirty) push(); }, 3000 + Math.random() * 3000);
+    }
+    pushing = false;
+    if (pushAgain) { pushAgain = false; push(); }
+  }
+  function adoptRemote(remote, note) {
+    state = remote;
+    lastSaved = JSON.stringify(state);
+    writeStore(KEY, lastSaved);
+    undoStack.length = 0; redoStack.length = 0; updateUndoUi();
+    syncFlags.dirty = false; syncFlags.seed = false; syncFlags.everSynced = true; saveFlags();
+    closeAllModals();
+    renderAll();
+    if (note) toast(note);
+  }
+  function docsFromSnap(snap) {
+    const map = {};
+    snap.docs.forEach((d) => { if (d.exists) map[d.id] = JSON.parse(JSON.stringify(d.data())); });
+    return map;
+  }
+  function chooseSource(remoteMap, remote) {
+    choosing = true;
+    setSync("", "⏳ Scegli quali dati tenere");
+    const loc = state;
+    $("modal-title").textContent = "Quali dati vuoi tenere?";
+    $("modal-text").textContent =
+      "Sul tuo account ci sono già dei dati diversi da quelli di questo dispositivo.\n" +
+      "• Account: " + remote.transactions.length + " movimenti, " + remote.goals.length + " obiettivi, conto risparmi " + eur.format(sum(remote.savings, (x) => x.amount)) + "\n" +
+      "• Questo dispositivo: " + loc.transactions.length + " movimenti, " + loc.goals.length + " obiettivi, conto risparmi " + eur.format(sum(loc.savings, (x) => x.amount)) + "\n" +
+      "Quelli che non scegli verranno sostituiti (puoi prima fare “Esporta dati”).";
+    $("modal-text").style.whiteSpace = "pre-line";
+    $("modal-ok").textContent = "Usa i dati dell'account"; $("modal-ok").className = "btn save"; $("modal-ok").style.display = "";
+    $("modal-cancel").textContent = "Usa questo dispositivo";
+    const done = () => { choosing = false; $("modal-text").style.whiteSpace = ""; $("modal-cancel").onclick = closeModal; };
+    modalAction = () => { done(); syncedDocs = {}; Object.keys(remoteMap).forEach((k) => { syncedDocs[k] = canon(remoteMap[k]); }); syncReady = true; adoptRemote(remote, "Dati dell'account caricati"); setSync("ok", "☁️ Sincronizzato"); };
+    $("modal-cancel").onclick = () => { closeModal(); done(); syncedDocs = {}; Object.keys(remoteMap).forEach((k) => { syncedDocs[k] = canon(remoteMap[k]); }); syncReady = true; push(); toast("Dati di questo dispositivo salvati sull'account"); };
+    $("modal").classList.add("open");
+  }
+
+  let firstSnap = true;
+  function onSnap(snap) {
+    if (snap.metadata.fromCache) return;
+    clearTimeout(loadTimer);
+    const map = docsFromSnap(snap);
+    if (firstSnap) {
+      firstSnap = false;
+      const remoteEmpty = !Object.keys(map).length;
+      if (remoteEmpty) { syncReady = true; syncedDocs = {}; push(); return; }
+      const remote = joinDocs(map);
+      const same = contentKey(remote) === contentKey(state);
+      const setSynced = () => { syncedDocs = {}; Object.keys(map).forEach((k) => { syncedDocs[k] = canon(map[k]); }); syncReady = true; };
+      if (same) { setSynced(); syncFlags.everSynced = true; saveFlags(); if (syncFlags.dirty) push(); else setSync("ok", "☁️ Sincronizzato", "I dati sono salvati sul tuo account claude.ai."); return; }
+      if (syncFlags.seed || (syncFlags.everSynced && !syncFlags.dirty)) { setSynced(); adoptRemote(remote); setSync("ok", "☁️ Sincronizzato", "I dati sono salvati sul tuo account claude.ai."); return; }
+      if (syncFlags.everSynced && syncFlags.dirty) { setSynced(); push(); return; } // modifiche fatte offline: le carico
+      chooseSource(map, remote);
+      return;
+    }
+    if (!syncReady || pushing || syncTimer || snap.metadata.hasPendingWrites || choosing) return;
+    // modifiche arrivate da un altro dispositivo?
+    const changed = Object.keys(map).some((k) => syncedDocs[k] !== canon(map[k])) || Object.keys(syncedDocs).some((k) => !map[k]);
+    if (!changed) return;
+    syncedDocs = {}; Object.keys(map).forEach((k) => { syncedDocs[k] = canon(map[k]); });
+    const remote = joinDocs(map);
+    if (contentKey(remote) === contentKey(state)) return;
+    adoptRemote(remote, "🔄 Aggiornato con le modifiche dall'altro dispositivo");
+    setSync("ok", "☁️ Sincronizzato");
+  }
+  let loadTimer = null;
+  async function startSync() {
+    try {
+      if (!(window.claude && typeof window.claude.use === "function")) return setSync("", "💾 Solo su questo dispositivo", "Aperta fuori da claude.ai: i dati restano in questo browser.");
+      setSync("", "⏳ Collegamento…");
+      const [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
+      const id = user && (await user.id());
+      if (!db || !id) return setSync("", "💾 Solo su questo dispositivo", "Accedi a claude.ai per sincronizzare i dati tra i dispositivi.");
+      coll = db.collection("data/users/" + id);
+      loadTimer = setTimeout(() => setSync("warn", "⚠️ Cloud non raggiungibile", "Uso i dati di questo browser; riprovo da solo appena torna la connessione."), 10000);
+      coll.onSnapshot(onSnap, (e) => {
+        clearTimeout(loadTimer);
+        setSync("warn", "⚠️ Sincronizzazione interrotta", "La sincronizzazione si è fermata (" + ((e && e.code) || "errore") + "). I dati restano in questo browser: ricarica la pagina più tardi.");
+      });
+    } catch (e) {
+      setSync("", "💾 Solo su questo dispositivo", "Sincronizzazione non disponibile in questa vista.");
+    }
+  }
+
+  /* ---------- Avvio ---------- */
+  function renderAll() {
+    $("today-label").textContent = new Date().toLocaleDateString("it-IT", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    renderMonth();
+    renderTrend();
+    renderTxList();
+    renderSavings();
+    renderGoals();
+    renderBackupInfo();
+  }
+  $("undo-btn").onclick = undo;
+  $("redo-btn").onclick = redo;
+  fillCats();
+  setSvKind("extra");
+  setDateDefaults();
+  renderAll();
+  setSync("", "📱 Salvato su questo dispositivo", "I dati restano solo su questo telefono. Fai “Esporta dati” ogni tanto come copia di sicurezza.");
+  $("storage-where").textContent = "Dati salvati solo su questo dispositivo";
+  // Funziona anche offline
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+    window.addEventListener("load", () => { navigator.serviceWorker.register("./sw.js").catch(() => {}); });
+  }
+  // Chiede al sistema di non cancellare i dati
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+
+  let lastDay = ymd(new Date());
+  setInterval(() => { const d = ymd(new Date()); if (d !== lastDay) { lastDay = d; renderAll(); } }, 60000);
+})();
+</script>
+</body>
+</html>
