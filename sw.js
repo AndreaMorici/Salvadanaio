@@ -1,6 +1,6 @@
 // Salvadanaio – funzionamento offline.
 // Pagina: prima la rete (così ricevi gli aggiornamenti), se manca internet usa la copia salvata.
-const CACHE = "salvadanaio-v1";
+const CACHE = "salvadanaio-v3";
 const FILES = ["./", "./index.html", "./manifest.webmanifest", "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (e) => {
