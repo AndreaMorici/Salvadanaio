@@ -262,6 +262,27 @@
   .busy { display: inline-block; width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; vertical-align: -2px; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* Confronto con il mese prima */
+  .cmp { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--grid); }
+  .cmp h3 { font-size: 14.5px; margin: 0 0 10px; }
+  .cmp h3 span { text-transform: capitalize; }
+  .cmp-row { display: grid; grid-template-columns: 22px minmax(0,1fr) auto auto; gap: 10px; align-items: center; padding: 6px 0; font-size: 14px; }
+  .cmp-row + .cmp-row { border-top: 1px solid var(--grid); }
+  .cmp-row .ic { text-align: center; }
+  .cmp-row .nm small { display: block; font-size: 12px; color: var(--muted); }
+  .cmp-row .now { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .dlt { font-size: 12.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .dlt.good { color: var(--good-text); background: color-mix(in srgb, var(--good) 12%, transparent); }
+  .dlt.bad { color: var(--crit-text); background: color-mix(in srgb, var(--crit) 12%, transparent); }
+  .dlt.flat { color: var(--muted); background: var(--surface-2); }
+  /* Previsione obiettivi */
+  .goal-eta { font-size: 12.5px; color: var(--ink-2); margin-top: 7px; padding-top: 7px; border-top: 1px dashed var(--grid); }
+  .goal-eta b { color: var(--ink); }
+  .goal-eta .ok { color: var(--good-text); font-weight: 650; }
+  .goal-eta .late { color: var(--crit-text); font-weight: 650; }
+  .pace { font-size: 12.5px; color: var(--ink-2); background: var(--surface-2); border-radius: 10px; padding: 8px 12px; margin: -4px 0 12px; }
+  .pace b { color: var(--ink); }
+
   /* Inserimento rapido */
   .wrap { padding-bottom: calc(96px + env(safe-area-inset-bottom)) !important; }
   .fab { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: calc(18px + env(safe-area-inset-bottom)); width: 60px; height: 60px; border-radius: 50%; border: 0; background: var(--accent); color: #fff; font-size: 32px; line-height: 1; cursor: pointer; z-index: 40; box-shadow: 0 6px 20px rgba(0,0,0,.25); display: grid; place-items: center; transition: transform .15s; }
@@ -508,6 +529,7 @@
           <div class="bar" id="budget-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Spese rispetto al tetto mensile"><div></div></div>
           <span class="txt" id="budget-pct"></span>
         </div>
+        <div class="cmp" id="cmp"></div>
       </section>
 
       <section class="card" aria-labelledby="trend-title">
@@ -578,6 +600,7 @@
           <span class="small muted" id="goals-count"></span>
         </div>
         <div class="goals-note" id="goals-note"></div>
+        <div class="pace" id="pace" hidden></div>
         <div class="goals" id="goals"></div>
         <button class="add-goal-btn" id="add-goal-btn">+ Nuovo obiettivo</button>
         <form class="goal-form" id="goal-form" hidden autocomplete="off">
@@ -882,6 +905,7 @@
   const lastDayOf = (y, m) => ymd(new Date(y, m + 1, 0));
   const monthName = (y, m, opt) => new Date(y, m, 1).toLocaleDateString("it-IT", opt || { month: "long" });
   const monthLong = (y, m) => monthName(y, m, { month: "long", year: "numeric" });
+  const aMese = (txt) => (/^[aeiouAEIOU]/.test(txt) ? "ad " : "a ") + txt; // "a novembre", "ad aprile"
 
   const CATS = {
     out: ["Terea", "Cibo", "Spesa", "Trasporti", "Shopping", "Svago", "Altro"],
@@ -1157,7 +1181,7 @@
   const toMonthVal = (d) => d.slice(0, 7);
   function setDateDefaults() {
     const mn = monthName(view.y, view.m);
-    $("f-submit").textContent = "+ Aggiungi a " + mn;
+    $("f-submit").textContent = "+ Aggiungi " + aMese(mn);
     setSvKind(svKind);
   }
 
@@ -1209,6 +1233,7 @@
     $("k-total-sub").textContent = (delta >= 0 ? "+" : "−") + eur0.format(Math.abs(delta)) + " rispetto al mese prima";
 
     renderDonut(st);
+    renderCompare(st);
     renderBudget(st);
   }
 
@@ -1290,6 +1315,65 @@
     d.querySelectorAll("circle.sl").forEach((c) => c.classList.toggle("on", c.dataset.k === k));
     document.querySelectorAll("#donut-legend .lg-row").forEach((r) => r.classList.toggle("on", r.dataset.k === k));
   }
+
+  /* ---------- Confronto con il mese prima ---------- */
+  function catTotals(tx) {
+    const o = {};
+    tx.filter((t) => t.type === "out").forEach((t) => { o[t.cat] = (o[t.cat] || 0) + t.amount; });
+    return o;
+  }
+  function deltaTag(now, prev, goodWhenUp) {
+    const d = round2(now - prev);
+    if (Math.abs(d) < 0.5) return '<span class="dlt flat">= uguale</span>';
+    const up = d > 0;
+    const cls = up === goodWhenUp ? "good" : "bad";
+    const pct = prev > 0 ? " (" + (up ? "+" : "−") + Math.round(Math.abs(d) / prev * 100) + "%)" : "";
+    return '<span class="dlt ' + cls + '">' + (up ? "▲ +" : "▼ −") + eur0.format(Math.abs(d)) + pct + "</span>";
+  }
+  function renderCompare(st) {
+    const box = $("cmp");
+    const { y, m } = view;
+    const pd = new Date(y, m - 1, 1);
+    const prev = monthStats(pd.getFullYear(), pd.getMonth());
+    const prevName = monthName(pd.getFullYear(), pd.getMonth());
+    if (!prev.tx.length && !prev.saved) { box.innerHTML = '<h3>📊 Rispetto ' + (/^[aeiou]/i.test(prevName) ? "ad" : "a") + ' <span>' + esc(prevName) + '</span></h3><div class="empty" style="padding:4px 0;text-align:left">Nessun dato ' + esc(aMese(prevName)) + " da confrontare.</div>"; return; }
+    if (!st.tx.length && !st.saved) { box.innerHTML = ""; return; }
+    const rows = [];
+    rows.push({ ic: "🧾", name: "Spese totali", now: st.out, prev: prev.out, goodUp: false });
+    rows.push({ ic: "🐷", name: "Messo da parte", now: st.saved, prev: prev.saved, goodUp: true });
+    // le categorie che sono cambiate di più (in euro)
+    const a = catTotals(st.tx), b = catTotals(prev.tx);
+    const cats = [...new Set([...Object.keys(a), ...Object.keys(b)])]
+      .map((c) => ({ ic: CAT_ICON[c] || "📦", name: c, now: a[c] || 0, prev: b[c] || 0, goodUp: false, cat: true }))
+      .filter((r) => Math.abs(r.now - r.prev) >= 5)
+      .sort((p, q) => Math.abs(q.now - q.prev) - Math.abs(p.now - p.prev))
+      .slice(0, 4);
+    box.innerHTML = '<h3>📊 Rispetto ' + (/^[aeiou]/i.test(prevName) ? "ad" : "a") + ' <span>' + esc(prevName) + "</span></h3>" +
+      [...rows, ...cats].map((r) =>
+        '<div class="cmp-row"><span class="ic">' + r.ic + '</span><span class="nm">' + esc(r.name) +
+        "<small>" + esc(prevName) + ": " + eur0.format(r.prev) + "</small></span>" +
+        '<span class="now">' + eur0.format(r.now) + "</span>" + deltaTag(r.now, r.prev, r.goodUp) + "</div>").join("") +
+      (cats.length ? "" : '<div class="small muted" style="margin-top:6px">Nessuna categoria è cambiata di più di 5 €.</div>') +
+      (isCurrentMonth(y, m) ? '<div class="small muted" style="margin-top:8px">⏳ ' + esc(monthName(y, m).replace(/^./, (c) => c.toUpperCase())) + " è ancora in corso: il confronto completo lo vedi a fine mese.</div>" : "");
+  }
+
+  /* ---------- Ritmo di risparmio (per le previsioni) ---------- */
+  function savingPace() {
+    // media del "messo da parte" negli ultimi 3 mesi con dati, fino al mese corrente
+    const now = new Date();
+    const months = [];
+    for (let i = 0; i < 24 && months.length < 3; i++) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const y = d.getFullYear(), m = d.getMonth();
+      const flows = monthFlows(y, m);
+      if (!flows.length) continue;
+      months.push({ y, m, saved: round2(sum(flows, (x) => x.amount)) });
+    }
+    if (!months.length) return null;
+    const avg = round2(sum(months, (x) => x.saved) / months.length);
+    return { avg, n: months.length, months };
+  }
+  const addMonths = (k) => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth() + k, 1); };
 
   function renderBudget(st) {
     const budget = state.budget, out = st.out;
@@ -1384,7 +1468,7 @@
     const st = monthStats(view.y, view.m);
     $("sv-total").textContent = eur.format(total);
     $("sv-total").style.color = total < 0 ? "var(--crit-text)" : "";
-    $("sv-month").innerHTML = '<span class="delta' + (st.saved < 0 ? " neg" : "") + '">' + (st.saved >= 0 ? "+" : "−") + eur.format(Math.abs(st.saved)) + "</span> messi da parte a " + esc(monthName(view.y, view.m));
+    $("sv-month").innerHTML = '<span class="delta' + (st.saved < 0 ? " neg" : "") + '">' + (st.saved >= 0 ? "+" : "−") + eur.format(Math.abs(st.saved)) + "</span> messi da parte " + esc(aMese(monthName(view.y, view.m)));
     $("sv-rate").textContent = st.inc > 0 ? pctOf(st.saved, st.inc) + "%" : "–";
 
     // Movimenti conto
@@ -1430,6 +1514,14 @@
     const ready = act.filter((g) => total >= g.target).length;
     $("goals-count").textContent = act.length ? ready + " di " + act.length + " a portata di mano" : "";
     $("goals-note").textContent = act.length ? "Tutti calcolati sullo stesso saldo di " + eur.format(total) + ", in ordine di importanza." : "";
+    const pace = savingPace();
+    const paceBox = $("pace");
+    paceBox.hidden = !act.length;
+    if (act.length) {
+      paceBox.innerHTML = pace
+        ? "📈 Il tuo ritmo: in media metti da parte <b>" + eur0.format(pace.avg) + "/mese</b> (" + (pace.n === 1 ? "ultimo mese" : "ultimi " + pace.n + " mesi") + "). Le date qui sotto sono calcolate su questo."
+        : "📈 Inserisci quanto metti da parte ogni mese e ti dico quando raggiungi ogni obiettivo.";
+    }
     if (!act.length) wrap.innerHTML = '<div class="empty">Nessun obiettivo attivo: creane uno qui sotto.</div>';
     const now = new Date();
     act.forEach((g, i) => {
@@ -1442,6 +1534,23 @@
         const left = (dy - now.getFullYear()) * 12 + (dm - 1 - now.getMonth()) + 1;
         meta = "entro " + new Date(dy, dm - 1, 1).toLocaleDateString("it-IT", { month: "short", year: "numeric" });
         if (!isReady) plan = left > 0 ? "≈ " + eur0.format(Math.ceil(missing / left)) + "/mese per " + left + (left === 1 ? " mese" : " mesi") : '<span class="badge late">Scadenza passata</span>';
+      }
+      // previsione: quando ci arrivi al ritmo attuale
+      let eta = "";
+      if (!isReady && pace) {
+        if (pace.avg > 0) {
+          const k = Math.ceil(missing / pace.avg);
+          const when = addMonths(k);
+          const whenTxt = when.toLocaleDateString("it-IT", { month: "long", year: "numeric" });
+          let vs = "";
+          if (g.deadline && MONTH_RE.test(g.deadline)) {
+            const [dy, dm] = g.deadline.split("-").map(Number);
+            const late = (when.getFullYear() - dy) * 12 + (when.getMonth() - (dm - 1));
+            vs = late <= 0 ? ' · <span class="ok">✅ in tempo per la scadenza</span>'
+              : ' · <span class="late">⚠️ ' + late + (late === 1 ? " mese" : " mesi") + " dopo la scadenza</span>";
+          }
+          eta = "📅 Al tuo ritmo ci arrivi " + (/^[aeiou]/i.test(whenTxt) ? "ad" : "a") + " <b>" + whenTxt + "</b>" + (k <= 1 ? " (il mese prossimo)" : " (tra " + k + " mesi)") + vs;
+        } else eta = '📅 <span class="late">Negli ultimi mesi il saldo risparmi è calato: al ritmo attuale non ci arrivi.</span>';
       }
       const el = document.createElement("div");
       el.className = "goal" + (isReady ? " ready" : "");
@@ -1462,7 +1571,8 @@
             '<button class="mini ed" title="Modifica" aria-label="Modifica obiettivo">✎</button>' +
             '<button class="mini rm" title="Elimina" aria-label="Elimina obiettivo">×</button>' +
           "</span>" +
-        "</div>";
+        "</div>" +
+        (eta ? '<div class="goal-eta">' + eta + "</div>" : "");
       el.querySelector(".up").onclick = () => moveGoal(g.id, -1);
       el.querySelector(".dn").onclick = () => moveGoal(g.id, 1);
       el.querySelector(".ok").onclick = () => openDone(g);
@@ -1722,7 +1832,7 @@
     $("f-desc").value = ""; $("f-amount").value = "";
     renderAll();
     $("f-desc").focus();
-    toast((txType === "in" ? "Entrata" : "Uscita") + " di " + eur.format(amount) + " aggiunta a " + monthName(view.y, view.m));
+    toast((txType === "in" ? "Entrata" : "Uscita") + " di " + eur.format(amount) + " aggiunta " + aMese(monthName(view.y, view.m)));
   });
   document.querySelectorAll("#tx-filters button").forEach((b) => {
     b.onclick = () => {
@@ -1742,7 +1852,7 @@
     svKind = k;
     document.querySelectorAll("#sv-seg button").forEach((x) => x.classList.toggle("on", x.dataset.k === k));
     const mn = monthName(view.y, view.m);
-    $("s-submit").textContent = k === "extra" ? "+ Versamento a " + mn : k === "withdraw" ? "− Prelievo a " + mn : "+ Saldo iniziale (" + mn + ")";
+    $("s-submit").textContent = k === "extra" ? "+ Versamento " + aMese(mn) : k === "withdraw" ? "− Prelievo " + aMese(mn) : "+ Saldo iniziale (" + mn + ")";
     $("s-submit").className = k === "withdraw" ? "btn ghost" : "btn save";
     $("s-hint").textContent = SV_HINT[k];
   }
