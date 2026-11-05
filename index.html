@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -54,6 +54,11 @@
   button, input, select { font: inherit; color: inherit; }
   .wrap { max-width: 1240px; margin: 0 auto; padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left)); }
   html { -webkit-text-size-adjust: 100%; }
+  /* niente zoom col doppio tocco: i tocchi veloci (es. 1-1 sul tastierino) contano tutti */
+  html, body, button, a, input, select, label, .qa-keys, .qa-cats, .qa-recent { touch-action: manipulation; }
+  button { -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+  /* su iPhone un campo con testo sotto i 16px fa ingrandire la pagina quando lo tocchi */
+  @media (max-width: 1000px) { input, select, textarea { font-size: 16px !important; } }
   body { overscroll-behavior-y: none; }
   [hidden] { display: none !important; }
 
@@ -283,6 +288,45 @@
   .pace { font-size: 12.5px; color: var(--ink-2); background: var(--surface-2); border-radius: 10px; padding: 8px 12px; margin: -4px 0 12px; }
   .pace b { color: var(--ink); }
 
+  /* Resoconto annuale */
+  .years { display: flex; flex-wrap: wrap; gap: 8px; }
+  .year-btn { border: 1px solid var(--border); background: var(--surface); border-radius: 12px; padding: 10px 14px; cursor: pointer; text-align: left; min-width: 120px; flex: 1; color: var(--ink); }
+  .year-btn:hover { background: var(--surface-2); }
+  .year-btn b { display: block; font-size: 18px; }
+  .year-btn span { font-size: 12.5px; color: var(--muted); }
+  .modal-bg#recap { padding: 12px; }
+  .modal.recap { max-width: 520px; max-height: 94vh; overflow-y: auto; padding: 0; position: relative; -webkit-overflow-scrolling: touch; }
+  .recap-head { background: linear-gradient(135deg, #1baf7a, #2a78d6 60%, #6250d6); color: #fff; padding: 26px 22px 22px; border-radius: 16px 16px 0 0; text-align: center; position: relative; overflow: hidden; }
+  .modal .recap-head h3 { font-size: 28px; margin: 0; letter-spacing: -0.02em; color: #fff; }
+  .modal .recap-head p { margin: 6px 0 0; color: rgba(255,255,255,.92); font-size: 15px; }
+  .recap-head .big-emoji { font-size: 40px; line-height: 1; margin-bottom: 8px; }
+  .recap-body { padding: 18px 18px 8px; display: grid; gap: 10px; }
+  .rc { border-radius: 14px; padding: 14px 16px; background: var(--surface-2); }
+  .rc .l { font-size: 13px; color: var(--ink-2); font-weight: 600; }
+  .rc .v { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; margin-top: 2px; }
+  .rc .s { font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+  .rc.save { background: color-mix(in srgb, var(--save) 16%, var(--surface)); }
+  .rc.spend { background: color-mix(in srgb, var(--crit) 12%, var(--surface)); }
+  .rc.goals ul { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 14px; }
+  .rc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .rc-grid .rc .v { font-size: 20px; }
+  .recap-foot { padding: 6px 18px 18px; display: flex; justify-content: center; }
+  .recap-close { position: absolute; top: 10px; right: 12px; border: 0; background: rgba(255,255,255,.2); color: #fff; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; z-index: 2; }
+  .confetti { position: fixed; inset: 0; pointer-events: none; z-index: 80; overflow: hidden; }
+  .confetti span { position: absolute; top: -40px; font-size: 22px; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(540deg); opacity: .8; } }
+  /* Ricerca nel registro */
+  .search { position: relative; margin-top: 14px; }
+  .chip { white-space: nowrap; }
+  .sub-m { font-size: 12px; color: var(--muted); margin-left: 6px; white-space: nowrap; }
+  .search.top { margin: 0 0 16px; }
+  .search.top input { height: 44px; background: var(--surface-2); border-color: transparent; font-size: 15px; }
+  .search.top input:focus { background: var(--surface); border-color: var(--border); }
+  .search input { padding-left: 34px; padding-right: 34px; }
+  .search .ic { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+  .search .clr { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); }
+  .search-sum { font-size: 13px; color: var(--ink-2); background: var(--surface-2); border-radius: 10px; padding: 8px 12px; margin: 10px 0 4px; }
+
   /* Inserimento rapido */
   .wrap { padding-bottom: calc(96px + env(safe-area-inset-bottom)) !important; }
   .fab { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: calc(18px + env(safe-area-inset-bottom)); width: 60px; height: 60px; border-radius: 50%; border: 0; background: var(--accent); color: #fff; font-size: 32px; line-height: 1; cursor: pointer; z-index: 40; box-shadow: 0 6px 20px rgba(0,0,0,.25); display: grid; place-items: center; transition: transform .15s; }
@@ -488,7 +532,7 @@
         </form>
         <div class="mc-sum">
           <div class="meta"><div class="l">Altre entrate</div><div class="v" id="mc-other">–</div><div class="p">dal registro</div></div>
-          <div class="meta"><div class="l"><span class="sw" style="background:var(--spend)"></span>Spese</div><div class="v" id="mc-out">–</div><div class="p"><button class="link-btn" id="go-reg">+ aggiungi spese</button></div></div>
+          <div class="meta"><div class="l"><span class="sw" style="background:var(--spend)"></span>Spese</div><div class="v" id="mc-out">–</div><div class="p"><button class="link-btn" id="go-reg">+ aggiungi spese</button> · <button class="link-btn" id="go-search">🔍 cerca</button></div></div>
           <div class="meta"><div class="l"><span class="sw track"></span>Ancora disponibile</div><div class="v" id="mc-free">–</div><div class="p" id="mc-free-p"></div></div>
           <div class="meta hl"><div class="l">🏦 Risparmi a fine mese</div><div class="v" id="mc-total">–</div><div class="p"><button class="link-btn" id="adj-btn">Correggi col saldo reale</button></div></div>
         </div>
@@ -548,7 +592,12 @@
       </section>
 
       <section class="card" aria-labelledby="reg-title" id="reg-card">
-        <div class="card-head"><h2 id="reg-title">Registro entrate e uscite</h2></div>
+        <div class="card-head" style="margin-bottom:10px"><h2 id="reg-title">Registro entrate e uscite</h2></div>
+        <div class="search top">
+          <span class="ic">🔍</span>
+          <input type="text" id="tx-search" placeholder="Cerca in tutti i mesi (es. Amazon, Terea, pizza…)" aria-label="Cerca nei movimenti" autocomplete="off">
+          <button class="del clr" id="tx-search-clr" type="button" aria-label="Cancella ricerca" hidden>×</button>
+        </div>
         <form class="tx-form" id="tx-form" autocomplete="off">
           <div class="seg full" id="tx-seg" role="group" aria-label="Tipo di movimento">
             <button type="button" data-type="out" class="on">Uscita</button>
@@ -616,6 +665,14 @@
             <button type="submit" class="btn save">Crea obiettivo</button>
           </div>
         </form>
+      </section>
+
+      <section class="card" aria-labelledby="years-title">
+        <div class="card-head" style="margin-bottom:10px">
+          <h3 id="years-title">🎆 I tuoi anni</h3>
+          <span class="small muted">resoconto di ogni anno</span>
+        </div>
+        <div class="years" id="years"></div>
       </section>
 
       <section class="card" aria-labelledby="done-title">
@@ -696,6 +753,15 @@
     </div>
     <div class="row"><button type="button" class="btn ghost" id="dm-cancel">Annulla</button><button type="submit" class="btn save">Segna come completato</button></div>
   </form>
+</div>
+
+<div class="modal-bg" id="recap" role="dialog" aria-modal="true" aria-labelledby="recap-title">
+  <div class="modal recap">
+    <button class="recap-close" id="recap-x" aria-label="Chiudi">×</button>
+    <div class="recap-head" id="recap-head"></div>
+    <div class="recap-body" id="recap-body"></div>
+    <div class="recap-foot"><button class="btn" id="recap-ok">Grazie, chiudi</button></div>
+  </div>
 </div>
 
 <div class="modal-bg" id="edit-modal" role="dialog" aria-modal="true" aria-labelledby="ed-title">
@@ -1008,7 +1074,8 @@
       savings.push({ id: String(s.id || uid()), date: s.date.slice(0, 8) + "01", amount, kind, note: typeof s.note === "string" ? s.note.slice(0, 60) : "", goalId: kind === "goal" && s.goalId ? String(s.goalId) : null, ref: typeof s.ref === "string" ? s.ref.slice(0, 40) : undefined });
     });
     const budget = Number(src.budget) >= 0 ? Math.round(Number(src.budget)) : 1200;
-    return { state: { version: VERSION, budget, transactions, goals, savings, lastBackup: keepLastBackup || src.lastBackup || null }, skipped };
+    const recapsSeen = Array.isArray(src.recapsSeen) ? src.recapsSeen.map(Number).filter((n) => n > 1999 && n < 3000) : [];
+    return { state: { version: VERSION, budget, transactions, goals, savings, lastBackup: keepLastBackup || src.lastBackup || null, recapsSeen }, skipped };
   }
 
   let seededAtLoad = false;
@@ -1093,11 +1160,25 @@
     if (y < 8) y = ev.clientY + p;
     tip.style.left = x + "px"; tip.style.top = y + "px";
   }
+  // Riquadro dei dettagli: col mouse segue il puntatore; col dito si apre al tocco e si chiude da solo
+  let tipTimer = null, tipOwner = null, tipShownAt = 0;
+  function hideTip() { clearTimeout(tipTimer); tip.style.opacity = "0"; tipOwner = null; }
   function bindTip(el, htmlFn) {
-    el.addEventListener("mouseenter", (e) => { tip.innerHTML = htmlFn(); tip.style.opacity = "1"; moveTip(e); });
-    el.addEventListener("mousemove", moveTip);
-    el.addEventListener("mouseleave", () => { tip.style.opacity = "0"; });
+    el.addEventListener("pointerenter", (e) => { if (e.pointerType !== "mouse") return; tip.innerHTML = htmlFn(); tip.style.opacity = "1"; tipOwner = el; moveTip(e); });
+    el.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse" && tipOwner === el) moveTip(e); });
+    el.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hideTip(); });
+    el.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "mouse") return;
+      clearTimeout(tipTimer);
+      tip.innerHTML = htmlFn(); tip.style.opacity = "1"; tipOwner = el; tipShownAt = Date.now(); moveTip(e);
+      tipTimer = setTimeout(hideTip, 3500);
+    });
   }
+  // un tocco altrove, lo scorrimento o un cambio di schermata chiudono il riquadro
+  document.addEventListener("pointerdown", (e) => { if (tipOwner && !tipOwner.contains(e.target)) hideTip(); }, true);
+  // (lo scorrimento automatico subito dopo un tocco, quando la pagina si ridisegna, non conta)
+  window.addEventListener("scroll", () => { if (tipOwner && Date.now() - tipShownAt > 700) hideTip(); }, { passive: true });
+  document.addEventListener("visibilitychange", hideTip);
 
   /* ---------- Toast & modal ---------- */
   let toastTimer;
@@ -1116,7 +1197,7 @@
     t.classList.add("show");
     clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), t.querySelector("button") ? 5000 : 2400);
   }
-  function closeAllModals() { ["modal", "done-modal", "edit-modal", "export-modal", "imp-modal", "qa"].forEach((id) => $(id).classList.remove("open")); const f = $("fab"); if (f) f.style.display = ""; }
+  function closeAllModals() { ["modal", "done-modal", "edit-modal", "export-modal", "imp-modal", "qa", "recap"].forEach((id) => $(id).classList.remove("open")); const f = $("fab"); if (f) f.style.display = ""; }
   let modalAction = null;
   function confirmBox(title, text, okLabel, action, okClass) {
     $("modal-title").textContent = title;
@@ -1440,18 +1521,32 @@
   }
 
   /* ---------- Registro movimenti ---------- */
+  const fold = (x) => String(x).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   function renderTxList() {
-    const tx = monthTx(view.y, view.m);
+    const q = fold($("tx-search").value.trim());
+    $("tx-search-clr").hidden = !q;
+    const searching = q.length > 0;
+    const tx = searching ? state.transactions.filter((t) => fold(t.desc + " " + t.cat).includes(q)) : monthTx(view.y, view.m);
     const ul = $("tx-list");
     ul.innerHTML = "";
-    const shown = tx.filter((t) => txFilter === "all" || t.type === txFilter).reverse(); // ultime inserite in cima
-    if (!shown.length) ul.innerHTML = '<li style="display:block;border:0"><div class="empty">Nessun movimento da mostrare.</div></li>';
+    const shown = tx.map((t, i) => [t, i]).filter(([t]) => txFilter === "all" || t.type === txFilter)
+      .sort((a, b) => b[0].date.localeCompare(a[0].date) || b[1] - a[1]).map((x) => x[0]); // più recenti in cima
+    $("tx-list-title").textContent = searching ? "Risultati per “" + $("tx-search").value.trim() + "”" : "Movimenti di " + monthName(view.y, view.m);
+    let sumBox = $("search-sum");
+    if (searching) {
+      if (!sumBox) { sumBox = document.createElement("div"); sumBox.id = "search-sum"; sumBox.className = "search-sum"; ul.parentNode.insertBefore(sumBox, ul); }
+      const o = sum(shown.filter((t) => t.type === "out"), (t) => t.amount), n = sum(shown.filter((t) => t.type === "in"), (t) => t.amount);
+      const months = new Set(shown.map((t) => t.date.slice(0, 7))).size;
+      sumBox.innerHTML = "<b>" + shown.length + "</b> " + (shown.length === 1 ? "movimento" : "movimenti") + (months ? " in " + months + (months === 1 ? " mese" : " mesi") : "") +
+        (o ? " · uscite <b>" + eur.format(o) + "</b>" : "") + (n ? " · entrate <b>" + eur.format(n) + "</b>" : "");
+    } else if (sumBox) sumBox.remove();
+    if (!shown.length) ul.innerHTML = '<li style="display:block;border:0"><div class="empty">' + (searching ? "Nessun movimento trovato." : "Nessun movimento da mostrare.") + "</div></li>";
     shown.forEach((t) => {
       const li = document.createElement("li");
       const col = t.type === "out" ? (CAT_COLOR[t.cat] ? "var(" + CAT_COLOR[t.cat] + ")" : "var(--other)") : "";
       li.innerHTML =
         '<div class="tx-ico">' + (CAT_ICON[t.cat] || (t.type === "in" ? "💶" : "📦")) + (col ? '<i style="background:' + col + '"></i>' : "") + "</div>" +
-        '<div class="tx-desc"><div class="d">' + esc(t.desc) + '</div><span class="chip">' + esc(t.cat) + "</span></div>" +
+        '<div class="tx-desc"><div class="d">' + esc(t.desc) + '</div><span class="chip">' + esc(t.cat) + "</span>" + (searching ? '<span class="sub-m">' + esc(parseYmd(t.date).toLocaleDateString("it-IT", { month: "short", year: "numeric" }).replace(".", "")) + "</span>" : "") + "</div>" +
         '<div class="amt ' + t.type + '">' + (t.type === "in" ? "+" : "−") + eur.format(t.amount) + "</div>" +
         '<span class="row-acts"><button class="rep" aria-label="Ripeti ' + esc(t.desc) + '" title="Ripeti: aggiungila di nuovo">↻</button><button class="edit" aria-label="Modifica ' + esc(t.desc) + '" title="Modifica">✎</button><button class="del" aria-label="Elimina ' + esc(t.desc) + '" title="Elimina">×</button></span>';
       li.querySelector(".del").onclick = () => { state.transactions = state.transactions.filter((x) => x.id !== t.id); save("eliminazione “" + t.desc + "”"); renderAll(); toast("Movimento eliminato"); };
@@ -1594,8 +1689,8 @@
       const li = document.createElement("li");
       li.innerHTML =
         '<div class="goal-icon">' + esc(g.icon || "🎯") + "</div>" +
-        '<div style="min-width:0"><div class="nm">' + esc(g.name) + '</div><div class="m">completato a ' +
-          monthLong(d.getFullYear(), d.getMonth()) + " · " + (g.spent > 0 ? "speso " + eur0.format(g.spent) : "obiettivo " + eur0.format(g.target)) + "</div></div>" +
+        '<div style="min-width:0"><div class="nm">' + esc(g.name) + '</div><div class="m">completato ' +
+          aMese(monthLong(d.getFullYear(), d.getMonth())) + " · " + (g.spent > 0 ? "speso " + eur0.format(g.spent) : "obiettivo " + eur0.format(g.target)) + "</div></div>" +
         '<div class="acts"><button class="mini ed" title="Modifica" aria-label="Modifica">✎</button><button class="mini undo" title="Rimetti tra gli obiettivi attivi">↺ Riapri</button><button class="mini rm" aria-label="Elimina dallo storico">×</button></div>';
       li.querySelector(".ed").onclick = () => openEdit("goal", g.id);
       li.querySelector(".undo").onclick = () => confirmBox("Riaprire l'obiettivo?", "“" + g.name + "” torna tra gli obiettivi attivi" + (g.spent > 0 ? " e i " + eur.format(g.spent) + " scalati tornano nel conto risparmi." : "."), "Riapri", () => {
@@ -1948,7 +2043,7 @@
   function renderBackupInfo() { $("last-backup").textContent = "Ultimo backup: " + (state.lastBackup ? fmtDateTime(state.lastBackup) : "mai"); }
   function buildBackup() {
     return JSON.stringify({ app: "dashboard-personale", version: VERSION, exportedAt: new Date().toISOString(),
-      data: { budget: state.budget, transactions: state.transactions, goals: state.goals, savings: state.savings } }, null, 2);
+      data: { budget: state.budget, transactions: state.transactions, goals: state.goals, savings: state.savings, recapsSeen: state.recapsSeen || [] } }, null, 2);
   }
   function markBackup() { state.lastBackup = new Date().toISOString(); saveSilent(); renderBackupInfo(); }
   function openExport(json) { $("export-text").value = json; $("export-modal").classList.add("open"); $("export-copy").focus(); }
@@ -2433,14 +2528,141 @@
     else if (e.key === "Escape") closeQa();
   });
 
+  /* ---------- Ricerca ---------- */
+  $("tx-search").addEventListener("input", () => renderTxList());
+  $("tx-search-clr").onclick = () => { $("tx-search").value = ""; renderTxList(); $("tx-search").focus(); };
+  $("go-search").onclick = () => { $("reg-card").scrollIntoView({ behavior: "smooth", block: "start" }); setTimeout(() => $("tx-search").focus(), 450); };
+
+  /* ---------- Resoconto annuale ---------- */
+  const inYear = (d, Y) => d.startsWith(Y + "-");
+  function yearsWithData() {
+    const ys = new Set([...state.transactions.map((t) => +t.date.slice(0, 4)), ...state.savings.filter((x) => x.kind !== "initial").map((x) => +x.date.slice(0, 4))]);
+    return [...ys].filter((y) => y > 1999).sort((a, b) => b - a);
+  }
+  function yearStats(Y) {
+    const tx = state.transactions.filter((t) => inYear(t.date, Y));
+    const inc = round2(sum(tx.filter((t) => t.type === "in"), (t) => t.amount));
+    const out = round2(sum(tx.filter((t) => t.type === "out"), (t) => t.amount));
+    const sv = state.savings.filter((x) => inYear(x.date, Y));
+    const deposited = round2(sum(sv.filter((x) => FLOW_KINDS.has(x.kind) && x.amount > 0), (x) => x.amount));
+    const withdrawn = round2(-sum(sv.filter((x) => FLOW_KINDS.has(x.kind) && x.amount < 0), (x) => x.amount));
+    const goalSpent = round2(-sum(sv.filter((x) => x.kind === "goal"), (x) => x.amount));
+    const net = round2(deposited - withdrawn - goalSpent);           // messo da parte "contando anche le uscite"
+    const endBalance = balanceUntil(Y + "-12-31");
+    const startBalance = balanceUntil((Y - 1) + "-12-31");
+    const byCat = {};
+    tx.filter((t) => t.type === "out").forEach((t) => { byCat[t.cat] = (byCat[t.cat] || 0) + t.amount; });
+    const cats = Object.entries(byCat).sort((a, b) => b[1] - a[1]);
+    // mese in cui hai messo da parte di più
+    let best = null;
+    for (let m = 0; m < 12; m++) {
+      const v = round2(sum(monthFlows(Y, m), (x) => x.amount));
+      if (v > 0 && (!best || v > best.v)) best = { m, v };
+    }
+    const now = new Date();
+    const days = now.getFullYear() === Y ? Math.max(1, Math.round((now - new Date(Y, 0, 1)) / 864e5) + 1) : ((Y % 4 === 0 && Y % 100 !== 0) || Y % 400 === 0 ? 366 : 365);
+    const months = new Set(tx.map((t) => t.date.slice(0, 7))).size;
+    const goals = state.goals.filter((g) => g.completedAt && inYear(g.completedAt, Y));
+    return { Y, tx, inc, out, deposited, withdrawn, goalSpent, net, endBalance, startBalance, cats, best, days, months, goals, inProgress: now.getFullYear() === Y };
+  }
+  function spendJoke(out, days) {
+    const perDay = out / days;
+    if (out <= 0) return "Zero spese? Sei un mito o hai dimenticato di segnarle 😅";
+    const lines = [
+      [3000, "Tutto sommato potevi fare peggio 😌"],
+      [6000, "Respira. Non è ancora il momento di vendere un rene 🫁"],
+      [10000, "Ok, adesso siediti un attimo 😬"],
+      [Infinity, "Siediti prima di guardare… 😱💸"]
+    ];
+    return (lines.find(([lim]) => out < lim) || lines[3])[1] + " · circa " + eur.format(perDay) + " al giorno";
+  }
+  function showRecap(Y, newYear) {
+    const st = yearStats(Y);
+    const head = $("recap-head");
+    head.innerHTML = newYear
+      ? '<div class="big-emoji">🎉🥂🎆</div><h3 id="recap-title">Buon ' + (Y + 1) + "!</h3><p>Ecco com'è andato il tuo " + Y + " 💸</p>"
+      : '<div class="big-emoji">' + (st.inProgress ? "⏳" : "📅") + '</div><h3 id="recap-title">Il tuo ' + Y + (st.inProgress ? " finora" : "") + "</h3><p>" + (st.months ? st.months + (st.months === 1 ? " mese" : " mesi") + " di dati" : "Nessun dato") + "</p>";
+    const terea = st.cats.find(([c]) => c === "Terea");
+    const topCat = st.cats[0];
+    const rate = st.inc > 0 ? Math.round((st.net / st.inc) * 100) : null;
+    const body = $("recap-body");
+    body.innerHTML =
+      '<div class="rc save"><div class="l">🐷 Messi da parte nel ' + Y + '</div><div class="v">' + eur.format(st.net) + "</div>" +
+        '<div class="s">versati ' + eur0.format(st.deposited) + (st.withdrawn ? " · prelevati " + eur0.format(st.withdrawn) : "") + (st.goalSpent ? " · spesi per obiettivi " + eur0.format(st.goalSpent) : "") +
+        "<br>Conto risparmi: da " + eur0.format(st.startBalance) + " a <b>" + eur0.format(st.endBalance) + "</b></div></div>" +
+      '<div class="rc goals"><div class="l">🏆 Obiettivi completati</div>' +
+        (st.goals.length ? '<div class="v">' + st.goals.length + "</div><ul>" + st.goals.map((g) => "<li>" + esc(g.icon || "🎯") + " " + esc(g.name) + ' <span class="muted">· ' + esc(monthName(parseYmd(g.completedAt).getFullYear(), parseYmd(g.completedAt).getMonth())) + "</span></li>").join("") + "</ul>"
+          : '<div class="s">Nessuno quest\'anno… il prossimo è quello buono 💪</div>') + "</div>" +
+      '<div class="rc spend"><div class="l">💸 Spesi in tutto il ' + Y + '</div><div class="v">' + eur.format(st.out) + '</div><div class="s">' + esc(spendJoke(st.out, st.days)) + "</div></div>" +
+      '<div class="rc-grid">' +
+        '<div class="rc"><div class="l">💼 Entrate</div><div class="v">' + eur0.format(st.inc) + "</div></div>" +
+        '<div class="rc"><div class="l">📈 Tasso di risparmio</div><div class="v">' + (rate === null ? "–" : rate + "%") + "</div></div>" +
+        (topCat ? '<div class="rc"><div class="l">🔥 Categoria più cara</div><div class="v">' + (CAT_ICON[topCat[0]] || "") + " " + esc(topCat[0]) + '</div><div class="s">' + eur0.format(topCat[1]) + "</div></div>" : "") +
+        (st.best ? '<div class="rc"><div class="l">🥇 Mese più virtuoso</div><div class="v" style="text-transform:capitalize">' + esc(monthName(Y, st.best.m)) + '</div><div class="s">' + eur0.format(st.best.v) + " messi da parte</div></div>" : "") +
+        (terea ? '<div class="rc"><div class="l">🚬 Terea</div><div class="v">' + Math.round(terea[1] / 5.5) + " pacchetti</div><div class=\"s\">circa " + eur0.format(terea[1]) + "</div></div>" : "") +
+        '<div class="rc"><div class="l">🧾 Movimenti segnati</div><div class="v">' + st.tx.length + "</div></div>" +
+      "</div>";
+    $("recap").classList.add("open");
+    $("recap").querySelector(".modal").scrollTop = 0;
+    if (newYear) confetti();
+  }
+  function confetti() {
+    const box = document.createElement("div");
+    box.className = "confetti";
+    const em = ["🎉", "🎊", "✨", "🥂", "🎆", "💸", "🐷"];
+    for (let i = 0; i < 30; i++) {
+      const sp = document.createElement("span");
+      sp.textContent = em[i % em.length];
+      sp.style.left = Math.random() * 100 + "vw";
+      sp.style.animationDuration = 2.5 + Math.random() * 2.5 + "s";
+      sp.style.animationDelay = Math.random() * 1.2 + "s";
+      box.appendChild(sp);
+    }
+    document.body.appendChild(box);
+    setTimeout(() => box.remove(), 6500);
+  }
+  function closeRecap() { $("recap").classList.remove("open"); }
+  $("recap-ok").onclick = closeRecap;
+  $("recap-x").onclick = closeRecap;
+  $("recap").addEventListener("click", (e) => { if (e.target.id === "recap") closeRecap(); });
+  function renderYears() {
+    const ys = yearsWithData();
+    const box = $("years");
+    box.innerHTML = ys.length ? "" : '<div class="empty" style="width:100%">Qui troverai il resoconto di ogni anno, a partire da quando inizi a segnare i dati.</div>';
+    const nowY = new Date().getFullYear();
+    ys.forEach((Y) => {
+      const st = yearStats(Y);
+      const b = document.createElement("button");
+      b.className = "year-btn";
+      b.innerHTML = "<b>" + Y + (Y === nowY ? " ⏳" : "") + "</b><span>🐷 " + eur0.format(st.net) + " · 💸 " + eur0.format(st.out) + "</span>";
+      b.title = Y === nowY ? "Anno in corso" : "Resoconto " + Y;
+      b.onclick = () => showRecap(Y, false);
+      box.appendChild(b);
+    });
+  }
+  // Il 1° gennaio (o alla prima apertura dopo) mostra il resoconto dell'anno appena finito, una volta sola
+  function checkNewYear() {
+    const prevY = new Date().getFullYear() - 1;
+    state.recapsSeen = state.recapsSeen || [];
+    if (state.recapsSeen.includes(prevY) || !yearsWithData().includes(prevY)) return;
+    state.recapsSeen.push(prevY);
+    saveSilent();
+    setTimeout(() => showRecap(prevY, true), 400);
+  }
+
+  const simBtn = document.getElementById("sim-ny"); // solo nella pagina di prova
+  if (simBtn) simBtn.onclick = () => showRecap(new Date().getFullYear(), true);
+
   /* ---------- Avvio ---------- */
   function renderAll() {
+    if (tipOwner && !document.body.contains(tipOwner)) tipOwner = null; // l'elemento è stato ridisegnato: il riquadro si chiude da solo col timer
     $("today-label").textContent = new Date().toLocaleDateString("it-IT", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
     renderMonth();
     renderTrend();
     renderTxList();
     renderSavings();
     renderGoals();
+    renderYears();
     renderBackupInfo();
   }
   $("undo-btn").onclick = undo;
@@ -2449,6 +2671,7 @@
   setSvKind("extra");
   setDateDefaults();
   renderAll();
+  checkNewYear();
   setSync("", "📱 Salvato su questo dispositivo", "I dati restano solo su questo telefono. Fai “Esporta dati” ogni tanto come copia di sicurezza.");
   $("storage-where").textContent = "Dati salvati solo su questo dispositivo";
   // Funziona anche offline
@@ -2459,7 +2682,7 @@
   try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
 
   let lastDay = ymd(new Date());
-  setInterval(() => { const d = ymd(new Date()); if (d !== lastDay) { lastDay = d; renderAll(); } }, 60000);
+  setInterval(() => { const d = ymd(new Date()); if (d !== lastDay) { lastDay = d; checkNewYear(); renderAll(); } }, 60000);
 })();
 </script>
 </body>
